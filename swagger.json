@@ -158,7 +158,7 @@
     "/inspirations/{id}": {
       "get": {
         "tags": ["Inspirations"],
-        "description": "Get a single inspiration by ID",
+        "description": "Retrieve inspiration by inspiration ID",
         "parameters": [
           {
             "name": "id",
@@ -178,7 +178,7 @@
       },
       "put": {
         "tags": ["Inspirations"],
-        "description": "Update an inspiration by ID",
+        "description": "Update inspiration by inspiration ID",
         "parameters": [
           {
             "name": "id",
@@ -201,7 +201,7 @@
       },
       "delete": {
         "tags": ["Inspirations"],
-        "description": "Delete an inspiration by ID",
+        "description": "Delete inspiration by inspiration ID",
         "parameters": [
           {
             "name": "id",
@@ -238,7 +238,7 @@
       },
       "post": {
         "tags": ["Journals"],
-        "description": "Create a new journal",
+        "description": "Create a new journal entry",
         "responses": {
           "401": {
             "description": "Unauthorized"
@@ -255,7 +255,7 @@
     "/journals/{id}": {
       "get": {
         "tags": ["Journals"],
-        "description": "Get a single journal by ID",
+        "description": "Retrieve journal entry by ID",
         "parameters": [
           {
             "name": "id",
@@ -275,7 +275,7 @@
       },
       "put": {
         "tags": ["Journals"],
-        "description": "Update a journal by ID",
+        "description": "Update journal entry by ID",
         "parameters": [
           {
             "name": "id",
@@ -298,7 +298,7 @@
       },
       "delete": {
         "tags": ["Journals"],
-        "description": "Delete a journal by ID",
+        "description": "Delete journal entry by ID",
         "parameters": [
           {
             "name": "id",
@@ -323,7 +323,7 @@
     "/plans": {
       "get": {
         "tags": ["Plans"],
-        "description": "Get all plans",
+        "description": "Get all plan entries",
         "responses": {
           "500": {
             "description": "Internal Server Error"
@@ -335,7 +335,7 @@
       },
       "post": {
         "tags": ["Plans"],
-        "description": "Create a new plan",
+        "description": "Create a new plan entry",
         "responses": {
           "401": {
             "description": "Unauthorized"
@@ -352,7 +352,7 @@
     "/plans/{id}": {
       "get": {
         "tags": ["Plans"],
-        "description": "Get a single plan by ID",
+        "description": "Retrieve plan entry by ID",
         "parameters": [
           {
             "name": "id",
@@ -372,7 +372,7 @@
       },
       "put": {
         "tags": ["Plans"],
-        "description": "Update a plan by ID",
+        "description": "Update plan entry by ID",
         "parameters": [
           {
             "name": "id",
@@ -395,7 +395,7 @@
       },
       "delete": {
         "tags": ["Plans"],
-        "description": "Delete a plan by ID",
+        "description": "Delete plan entry by ID",
         "parameters": [
           {
             "name": "id",
