@@ -2,23 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-
 const inspirationsController = require('../controllers/inspirations');
-const { isAuthenticated } = require('../middleware/authenticate');
 
-// GET all inspirations
-router.get('/', inspirationsController.getAllInspirations);
-
-// GET a single inspiration by ID
-router.get('/:id', inspirationsController.getSingleInspiration);
-
-// POST a new inspiration (logged in)
-router.post('/', isAuthenticated, inspirationsController.createInspiration);
-
-// PUT (update) an inspiration by ID (logged in)
-router.put('/:id', isAuthenticated, inspirationsController.updateInspiration);
-
-// DELETE an inspiration by ID (logged in)
-router.delete('/:id', isAuthenticated, inspirationsController.deleteInspiration);
+router.post('/', inspirationsController.createInspiration);
+router.get('/:id', inspirationsController.getInspirationById);
+router.put('/:id', inspirationsController.updateInspirationById);
+router.delete('/:id', inspirationsController.deleteInspirationById);
+router.get('/user/:id', inspirationsController.getInspirationsByUserId);
+router.get('/user/:id/type/:type', inspirationsController.getInspirationsByUserIdAndType);
+router.get('/user/:id/step/:step', inspirationsController.getInspirationsByUserIdAndStep);
 
 module.exports = router;
