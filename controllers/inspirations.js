@@ -118,4 +118,6 @@ module.exports = {
     updateInspiration,
     deleteInspiration,
     getInspirationsByUserId,
+    getInspirationsByUserIdAndType,
+    getInspirationsByUserIdAndStep
 };

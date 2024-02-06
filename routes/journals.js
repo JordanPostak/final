@@ -1,3 +1,5 @@
+//...This is the routes/journals.js file...
+
 const express = require('express');
 const router = express.Router();
 const journalsController = require('../controllers/journals');

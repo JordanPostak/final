@@ -26,7 +26,9 @@ const doc = {
             name: 'Plans',
             description: 'Operations related to Plans'
         }
-    ]
+    ],
+    // Exclude default tags
+    defaultTag: 'default' 
 };
 
 const outputFile = './swagger.json';

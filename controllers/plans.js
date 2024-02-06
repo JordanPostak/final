@@ -3,21 +3,7 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAllPlans = async (req, res) => {
-    //#swagger.tags=['plans']
-    try {
-        const result = await mongodb.getDatabase().db('seerstone').collection('plans').find();
-        result.toArray().then((plans) => {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(plans);
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-const getSinglePlan = async (req, res) => {
+const getPlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
         const planId = req.params.id;
@@ -25,21 +11,20 @@ const getSinglePlan = async (req, res) => {
             return res.status(400).json({ error: 'Invalid plan ID' });
         }
 
-        const result = await mongodb.getDatabase().db('seerstone').collection('plans').find({ _id: new ObjectId(planId) });
-        result.toArray().then((plans) => {
-            if (plans.length === 0) {
-                return res.status(404).json({ error: 'Plan not found' });
-            }
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(plans[0]);
-        });
+        const plan = await mongodb.getDatabase().db('seerstone').collection('plans').findOne({ _id: new ObjectId(planId) });
+        if (!plan) {
+            return res.status(404).json({ error: 'Plan not found' });
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(plan);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
-const createPlan = async (req, res) => {
+const createPlanEntry = async (req, res) => {
     //#swagger.tags=['plans']
     try {
         const plan = {
@@ -62,7 +47,7 @@ const createPlan = async (req, res) => {
     }
 };
 
-const updatePlan = async (req, res) => {
+const updatePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
         const planId = ObjectId.createFromHexString(req.params.id);
@@ -86,7 +71,7 @@ const updatePlan = async (req, res) => {
     }
 };
 
-const deletePlan = async (req, res) => {
+const deletePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
         const planId = ObjectId.createFromHexString(req.params.id);
@@ -102,10 +87,35 @@ const deletePlan = async (req, res) => {
     }
 };
 
+const getPlanEntriesByUserId = async (req, res) => {
+    //#swagger.tags=['plans']
+    const { id } = req.params;
+    try {
+        const plans = await mongodb.getDatabase().db('seerstone').collection('plans').find({ user_id: id }).toArray();
+        res.status(200).json(plans);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const getPlanEntriesByUserIdAndInspirationId = async (req, res) => {
+    //#swagger.tags=['plans']
+    const { id } = req.params;
+    try {
+        const plans = await mongodb.getDatabase().db('seerstone').collection('plans').find({ user_id: id, inspiration_id: req.params.inspiration_id }).toArray();
+        res.status(200).json(plans);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
-    getAllPlans,
-    getSinglePlan,
-    createPlan,
-    updatePlan,
-    deletePlan
+    getPlanEntryById,
+    createPlanEntry,
+    updatePlanEntryById,
+    deletePlanEntryById,
+    getPlanEntriesByUserId,
+    getPlanEntriesByUserIdAndInspirationId
 };

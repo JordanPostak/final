@@ -7,61 +7,32 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [
-    {
-      "name": "Users",
-      "description": "Operations related to Users"
-    },
-    {
-      "name": "Inspirations",
-      "description": "Operations related to Inspirations"
-    },
-    {
-      "name": "Journals",
-      "description": "Operations related to Journals"
-    },
-    {
-      "name": "Plans",
-      "description": "Operations related to Plans"
-    }
-  ],
   "schemes": [
     "http"
   ],
   "paths": {
-    "/users": {
-      "get": {
-        "tags": ["Users"],
-        "description": "Get all users",
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
-          }
-        }
-      },
+    "/users/": {
       "post": {
-        "tags": ["Users"],
-        "description": "Create a new user",
+        "tags": [
+          "users"
+        ],
+        "description": "",
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "201": {
+            "description": "Created"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       }
     },
     "/users/{id}": {
       "get": {
-        "tags": ["Users"],
-        "description": "Get a single user by ID",
+        "tags": [
+          "users"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -71,17 +42,22 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "put": {
-        "tags": ["Users"],
-        "description": "Update a user by ID",
+        "tags": [
+          "users"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -91,20 +67,22 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "delete": {
-        "tags": ["Users"],
-        "description": "Delete a user by ID",
+        "tags": [
+          "users"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -114,51 +92,40 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       }
     },
-    "/inspirations": {
-      "get": {
-        "tags": ["Inspirations"],
-        "description": "Get all inspirations",
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
-          }
-        }
-      },
+    "/inspirations/": {
       "post": {
-        "tags": ["Inspirations"],
-        "description": "Create a new inspiration",
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "201": {
+            "description": "Created"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       }
     },
     "/inspirations/{id}": {
       "get": {
-        "tags": ["Inspirations"],
-        "description": "Retrieve inspiration by inspiration ID",
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -168,17 +135,22 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "put": {
-        "tags": ["Inspirations"],
-        "description": "Update inspiration by inspiration ID",
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -188,20 +160,22 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "delete": {
-        "tags": ["Inspirations"],
-        "description": "Delete inspiration by inspiration ID",
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -211,51 +185,124 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       }
     },
-    "/journals": {
+    "/inspirations/user/{id}": {
       "get": {
-        "tags": ["Journals"],
-        "description": "Get all journals",
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
-      },
-      "post": {
-        "tags": ["Journals"],
-        "description": "Create a new journal entry",
+      }
+    },
+    "/inspirations/user/{id}/type/{type}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/user/{id}/step/{step}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           },
-          "501": {
-            "description": "Not Implemented"
+          {
+            "name": "step",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/journals/": {
+      "post": {
+        "tags": [
+          "journals"
+        ],
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/journals/{id}": {
       "get": {
-        "tags": ["Journals"],
-        "description": "Retrieve journal entry by ID",
+        "tags": [
+          "journals"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -265,17 +312,22 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "put": {
-        "tags": ["Journals"],
-        "description": "Update journal entry by ID",
+        "tags": [
+          "journals"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -285,20 +337,22 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "delete": {
-        "tags": ["Journals"],
-        "description": "Delete journal entry by ID",
+        "tags": [
+          "journals"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -308,51 +362,117 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       }
     },
-    "/plans": {
+    "/journals/user/{id}": {
       "get": {
-        "tags": ["Plans"],
-        "description": "Get all plan entries",
+        "tags": [
+          "journals"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
-      },
-      "post": {
-        "tags": ["Plans"],
-        "description": "Create a new plan entry",
+      }
+    },
+    "/journals/user/{id}/inspiration/{id}": {
+      "get": {
+        "tags": [
+          "journals"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plans/": {
+      "post": {
+        "tags": [
+          "plans"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "inspiration_id": {
+                  "example": "any"
+                },
+                "plan_type": {
+                  "example": "any"
+                },
+                "plan": {
+                  "example": "any"
+                },
+                "schedule": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
-          "501": {
-            "description": "Not Implemented"
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/plans/{id}": {
       "get": {
-        "tags": ["Plans"],
-        "description": "Retrieve plan entry by ID",
+        "tags": [
+          "plans"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -362,40 +482,71 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "put": {
-        "tags": ["Plans"],
-        "description": "Update plan entry by ID",
+        "tags": [
+          "plans"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "inspiration_id": {
+                  "example": "any"
+                },
+                "plan_type": {
+                  "example": "any"
+                },
+                "plan": {
+                  "example": "any"
+                },
+                "schedule": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
-          },
-          "501": {
-            "description": "Not Implemented"
           }
         }
       },
       "delete": {
-        "tags": ["Plans"],
-        "description": "Delete plan entry by ID",
+        "tags": [
+          "plans"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -405,17 +556,63 @@
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "204": {
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plans/user/{id}": {
+      "get": {
+        "tags": [
+          "plans"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
-          "501": {
-            "description": "Not Implemented"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plans/user/{id}/inspiration/{id}": {
+      "get": {
+        "tags": [
+          "plans"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     }
-  }
+  },
+  "defaultTag": "default"
 }

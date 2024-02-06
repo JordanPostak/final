@@ -3,18 +3,7 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
 
-const getAllJournals = async (req, res) => {
-    //#swagger.tags=['journals']
-    try {
-        const journals = await mongodb.getDatabase().db('seerstone').collection('journals').find({}).toArray();
-        res.status(200).json(journals);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-const getSingleJournal = async (req, res) => {
+const getJournalEntryById = async (req, res) => {
     //#swagger.tags=['journals']
     const { id } = req.params;
     try {
@@ -30,7 +19,7 @@ const getSingleJournal = async (req, res) => {
     }
 };
 
-const createJournal = async (req, res) => {
+const createJournalEntry = async (req, res) => {
     //#swagger.tags=['journals']
     const newJournal = req.body;
     try {
@@ -42,7 +31,7 @@ const createJournal = async (req, res) => {
     }
 };
 
-const updateJournal = async (req, res) => {
+const updateJournalEntryById = async (req, res) => {
     //#swagger.tags=['journals']
     const { id } = req.params;
     const updatedJournal = req.body;
@@ -62,7 +51,7 @@ const updateJournal = async (req, res) => {
     }
 };
 
-const deleteJournal = async (req, res) => {
+const deleteJournalEntryById = async (req, res) => {
     //#swagger.tags=['journals']
     const { id } = req.params;
     try {
@@ -92,9 +81,9 @@ const getJournalEntriesByUserId = async (req, res) => {
 
 const getJournalEntriesByUserIdAndInspirationId = async (req, res) => {
     //#swagger.tags=['journals']
-    const { userId, inspirationId } = req.params;
+    const { id, inspirationId } = req.params;
     try {
-        const journals = await mongodb.getDatabase().db('seerstone').collection('journals').find({ user_id: userId, inspiration_id: inspirationId }).toArray();
+        const journals = await mongodb.getDatabase().db('seerstone').collection('journals').find({ user_id: id, inspiration_id: inspirationId }).toArray();
         res.status(200).json(journals);
     } catch (error) {
         console.error(error);
@@ -103,11 +92,10 @@ const getJournalEntriesByUserIdAndInspirationId = async (req, res) => {
 };
 
 module.exports = {
-    getAllJournals,
-    getSingleJournal,
-    createJournal,
-    updateJournal,
-    deleteJournal,
+    getJournalEntryById,
+    createJournalEntry,
+    updateJournalEntryById,
+    deleteJournalEntryById,
     getJournalEntriesByUserId,
     getJournalEntriesByUserIdAndInspirationId
 };
