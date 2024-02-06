@@ -1,0 +1,34 @@
+{
+    "name": "cse-341-final",
+    "version": "1.0.0",
+    "description": "My final project",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "swagger": "node swagger.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JordanPostak/cse-341-final.git"
+    },
+    "author": "Jordan Postak",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JordanPostak/cse-341-final/issues"
+    },
+    "homepage": "https://github.com/JordanPostak/final#readme",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-session": "^1.17.3",
+        "mongodb": "^6.3.0",
+        "passport": "^0.7.0",
+        "passport-github2": "^0.1.12",
+        "swagger-ui-express": "^5.0.0"
+    },
+    "devDependencies": {
+        "swagger-autogen": "^2.23.7"
+    }
+}
