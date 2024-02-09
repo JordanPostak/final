@@ -394,7 +394,7 @@
         "tags": [
           "inspirations"
         ],
-        "summary": "Retreive all inspirations of a from a particular user",
+        "summary": "Retreive all inspirations of a particular user",
         "description": "This endpoint retreives all inspirations based on the id of a particular user. Must be logged in",
         "parameters": [
           {
@@ -422,7 +422,7 @@
         "tags": [
           "inspirations"
         ],
-        "summary": "Retreive all inspirations of a from a particular user and specific type",
+        "summary": "Retreive all inspirations of a particular user and specific type",
         "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular type. Must be logged in",
         "parameters": [
           {
@@ -456,7 +456,7 @@
         "tags": [
           "inspirations"
         ],
-        "summary": "Retreive all inspirations of a from a particular user and specific step",
+        "summary": "Retreive all inspirations of a particular user and specific step",
         "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular step. Must be logged in",
         "parameters": [
           {
@@ -490,8 +490,8 @@
         "tags": [
           "journals"
         ],
-        "summary": "Retreive all journals",
-        "description": "This endpoint retreives all journals.",
+        "summary": "Retreive all journal entries",
+        "description": "This endpoint retreives all journal entries.",
         "responses": {
           "200": {
             "description": "OK"
@@ -551,8 +551,8 @@
         "tags": [
           "journals"
         ],
-        "summary": "Retreive a single journal",
-        "description": "This endpoint retreives a single journal based on id.",
+        "summary": "Retreive a single journal entry",
+        "description": "This endpoint retreives a single journal entry based on id.",
         "parameters": [
           {
             "name": "id",
@@ -894,7 +894,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Retrieves all plans by a user",
+        "summary": "Retrieve all plans by a user",
         "description": "This endpoint retrieves all plans based on the id of a particular user. Must be logged in.",
         "parameters": [
           {
@@ -922,7 +922,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Retrieves all plans by a user and inspiration id",
+        "summary": "Retrieve all plans by a user and inspiration id",
         "description": "This endpoint retrieves all plans based on the id of a particular user as well as the id of the inspiration. Must be logged in.",
         "parameters": [
           {
