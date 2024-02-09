@@ -8,9 +8,9 @@ const doc = {
         description: 'API documentation for Final Project',
         version: '1.0.0'
     },
-    host: 'localhost:3000',
+    host: 'seerstoneapi.onrender.com',
     basePath: '/',
-    schemes: ['http'],
+    schemes: ['https'],
     paths: {
     }
 };
