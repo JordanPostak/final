@@ -6,29 +6,13 @@ const doc = {
     info: {
         title: 'Final Project',
         description: 'API documentation for Final Project',
+        version: '1.0.0'
     },
     host: 'localhost:3000',
+    basePath: '/',
     schemes: ['http'],
-    tags: [ // Define tags used in controllers
-        {
-            name: 'Users',
-            description: 'Operations related to Users'
-        },
-        {
-            name: 'Inspirations',
-            description: 'Operations related to Inspirations'
-        },
-        {
-            name: 'Journals',
-            description: 'Operations related to Journals'
-        },
-        {
-            name: 'Plans',
-            description: 'Operations related to Plans'
-        }
-    ],
-    // Exclude default tags
-    defaultTag: 'default' 
+    paths: {
+    }
 };
 
 const outputFile = './swagger.json';
@@ -38,7 +22,7 @@ const endpointsFiles = [
     './routes/inspirations.js', 
     './routes/journals.js', 
     './routes/plans.js'
-]; 
+];
 
 // This will generate swagger.json
 swaggerAutogen(outputFile, endpointsFiles, doc);

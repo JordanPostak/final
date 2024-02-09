@@ -3,21 +3,36 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getPlanEntryById = async (req, res) => {
+const getAllPlanEntries = async (req, res) => {
     //#swagger.tags=['plans']
     try {
-        const planId = req.params.id;
-        if (!ObjectId.isValid(planId)) {
-            return res.status(400).json({ error: 'Invalid plan ID' });
-        }
+        const result = await mongodb.getDatabase().db('seerstone').collection('plans').find();
+        result.toArray().then((blogs) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(blogs);
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
-        const plan = await mongodb.getDatabase().db('seerstone').collection('plans').findOne({ _id: new ObjectId(planId) });
-        if (!plan) {
-            return res.status(404).json({ error: 'Plan not found' });
-        }
+const getPlanEntryById = async (req, res) => {
+    //#swagger.tags=['plans']
+    const plangId = req.params.id;
+    if (!ObjectId.isValid(blogId)) {
+        return res.status(400).json({ error: 'Invalid plan ID' });
+    }
 
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(plan);
+    try {
+        const result = await mongodb.getDatabase().db('seerstone').collection('plan').find({ _id: ObjectId(plangId) });
+        result.toArray().then((plans) => {
+            if (plans.length === 0) {
+                return res.status(404).json({ error: 'Plan not found' });
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(plans[0]);
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -50,7 +65,7 @@ const createPlanEntry = async (req, res) => {
 const updatePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
-        const planId = ObjectId.createFromHexString(req.params.id);
+        const planId = ObjectId(req.params.id);
         const plan = {
             user_id: req.body.user_id,
             inspiration_id: req.body.inspiration_id,
@@ -74,7 +89,7 @@ const updatePlanEntryById = async (req, res) => {
 const deletePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
-        const planId = ObjectId.createFromHexString(req.params.id);
+        const planId = ObjectId(req.params.id);
         const response = await mongodb.getDatabase().db('seerstone').collection('plans').deleteOne({ _id: planId });
         if (response.deletedCount > 0) {
             res.status(204).send();
@@ -112,6 +127,7 @@ const getPlanEntriesByUserIdAndInspirationId = async (req, res) => {
 };
 
 module.exports = {
+    getAllPlanEntries,
     getPlanEntryById,
     createPlanEntry,
     updatePlanEntryById,

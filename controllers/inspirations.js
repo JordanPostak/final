@@ -32,7 +32,32 @@ const getSingleInspiration = async (req, res) => {
 
 const createInspiration = async (req, res) => {
     //#swagger.tags=['inspirations']
-    const newInspiration = req.body;
+    const {
+        user_id,
+        type,
+        step,
+        parent_id,
+        child_id,
+        evidence,
+        acted_on,
+        planned,
+        reviewed,
+        recorded
+    } = req.body;
+
+    const newInspiration = {
+        user_id,
+        type,
+        step,
+        parent_id,
+        child_id,
+        evidence,
+        acted_on,
+        planned,
+        reviewed,
+        recorded
+    };
+
     try {
         const result = await mongodb.getDatabase().db('seerstone').collection('inspirations').insertOne(newInspiration);
         res.status(201).json(result.ops[0]);
@@ -45,7 +70,32 @@ const createInspiration = async (req, res) => {
 const updateInspiration = async (req, res) => {
     //#swagger.tags=['inspirations']
     const { id } = req.params;
-    const updatedInspiration = req.body;
+    const {
+        user_id,
+        type,
+        step,
+        parent_id,
+        child_id,
+        evidence,
+        acted_on,
+        planned,
+        reviewed,
+        recorded
+    } = req.body;
+
+    const updatedInspiration = {
+        user_id,
+        type,
+        step,
+        parent_id,
+        child_id,
+        evidence,
+        acted_on,
+        planned,
+        reviewed,
+        recorded
+    };
+
     try {
         const result = await mongodb.getDatabase().db('seerstone').collection('inspirations').updateOne(
             { _id: ObjectId(id) },
@@ -78,10 +128,11 @@ const deleteInspiration = async (req, res) => {
     }
 };
 
-const getInspirationsByUserId = async (req, res) => {//#swagger.tags=['inspirations']
-    const { id } = req.params;
+const getInspirationsByUserId = async (req, res) => {
+    //#swagger.tags=['inspirations']
+    const { user_id } = req.body;
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id: id }).toArray();
+        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id }).toArray();
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
@@ -89,10 +140,11 @@ const getInspirationsByUserId = async (req, res) => {//#swagger.tags=['inspirati
     }
 };
 
-const getInspirationsByUserIdAndType = async (req, res) => {//#swagger.tags=['inspirations']
-    const { id, type } = req.params;
+const getInspirationsByUserIdAndType = async (req, res) => {
+    //#swagger.tags=['inspirations']
+    const { user_id, type } = req.body;
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id: id, type }).toArray();
+        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id, type }).toArray();
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
@@ -100,10 +152,11 @@ const getInspirationsByUserIdAndType = async (req, res) => {//#swagger.tags=['in
     }
 };
 
-const getInspirationsByUserIdAndStep = async (req, res) => {//#swagger.tags=['inspirations']
-    const { id, step } = req.params;
+const getInspirationsByUserIdAndStep = async (req, res) => {
+    //#swagger.tags=['inspirations']
+    const { user_id, step } = req.body;
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id: id, step }).toArray();
+        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id, step }).toArray();
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);

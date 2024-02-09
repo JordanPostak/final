@@ -12,14 +12,62 @@
   ],
   "paths": {
     "/users/": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Retrieve all user profiles",
+        "description": "This endpoint retrieves all user profiles.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "users"
         ],
-        "description": "",
+        "summary": "Create user profile",
+        "description": "This endpoint creates a new user profiles. Must be logged in.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "username": {
+                  "example": "any"
+                },
+                "first_name": {
+                  "example": "any"
+                },
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -32,444 +80,8 @@
         "tags": [
           "users"
         ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "users"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "users"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/inspirations/": {
-      "post": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/inspirations/{id}": {
-      "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/inspirations/user/{id}": {
-      "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/inspirations/user/{id}/type/{type}": {
-      "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "type",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/inspirations/user/{id}/step/{step}": {
-      "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "step",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/journals/": {
-      "post": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/journals/{id}": {
-      "get": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/journals/user/{id}": {
-      "get": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/journals/user/{id}/inspiration/{id}": {
-      "get": {
-        "tags": [
-          "journals"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/plans/": {
-      "post": {
-        "tags": [
-          "plans"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "user_id": {
-                  "example": "any"
-                },
-                "inspiration_id": {
-                  "example": "any"
-                },
-                "plan_type": {
-                  "example": "any"
-                },
-                "plan": {
-                  "example": "any"
-                },
-                "schedule": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/plans/{id}": {
-      "get": {
-        "tags": [
-          "plans"
-        ],
-        "description": "",
+        "summary": "Get single profile",
+        "description": "This endpoint retrieves a single user profile based on the id.",
         "produces": [
           "application/json"
         ],
@@ -498,9 +110,714 @@
       },
       "put": {
         "tags": [
+          "users"
+        ],
+        "summary": "Update a user profile",
+        "description": "This endpoint updates a user profile based on the user id. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "username": {
+                  "example": "any"
+                },
+                "first_name": {
+                  "example": "any"
+                },
+                "last_name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Delete a user profile",
+        "description": "This endpoint deletes a user profile based on the user id. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Retrieve all inspirations",
+        "description": "This endpoint retrieves all inspirations.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Creates a new inspiration",
+        "description": "This endpoint creates a new inspiration. Must be logged in.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "step": {
+                  "example": "any"
+                },
+                "parent_id": {
+                  "example": "any"
+                },
+                "child_id": {
+                  "example": "any"
+                },
+                "evidence": {
+                  "example": "any"
+                },
+                "acted_on": {
+                  "example": "any"
+                },
+                "planned": {
+                  "example": "any"
+                },
+                "reviewed": {
+                  "example": "any"
+                },
+                "recorded": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/{id}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Retrieves a single inspiration",
+        "description": "This endpoint retrieves a single inspiration based on id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Update a single inspiration",
+        "description": "This endpoint updates a single inspiration based on id. Must be logged in",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "step": {
+                  "example": "any"
+                },
+                "parent_id": {
+                  "example": "any"
+                },
+                "child_id": {
+                  "example": "any"
+                },
+                "evidence": {
+                  "example": "any"
+                },
+                "acted_on": {
+                  "example": "any"
+                },
+                "planned": {
+                  "example": "any"
+                },
+                "reviewed": {
+                  "example": "any"
+                },
+                "recorded": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Delete an inspiration",
+        "description": "This endpoint deletes an inspiration based on id. Must be logged in",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/user/{id}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Retreive all inspirations of a from a particular user",
+        "description": "This endpoint retreives all inspirations based on the id of a particular user. Must be logged in",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/user/{id}/type/{type}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Retreive all inspirations of a from a particular user and specific type",
+        "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular type. Must be logged in",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/inspirations/user/{id}/step/{step}": {
+      "get": {
+        "tags": [
+          "inspirations"
+        ],
+        "summary": "Retreive all inspirations of a from a particular user and specific step",
+        "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular step. Must be logged in",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "step",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/journals/": {
+      "get": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Retreive all journals",
+        "description": "This endpoint retreives all journals.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Create a journal entry",
+        "description": "This endpoint creates a journal entry. Must be logged in.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "date": {
+                  "example": "any"
+                },
+                "entry": {
+                  "example": "any"
+                },
+                "inspiration_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/journals/{id}": {
+      "get": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Retreive a single journal",
+        "description": "This endpoint retreives a single journal based on id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Update a journal entry",
+        "description": "This endpoint updates a journal entry based on id. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "date": {
+                  "example": "any"
+                },
+                "entry": {
+                  "example": "any"
+                },
+                "inspiration_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Delete a journal entry",
+        "description": "This endpoint deletes a journal entry based on id. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/journals/user/{id}": {
+      "get": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Retrieve all journal entries by user",
+        "description": "This endpoint retrieves all journal entries based on the id of a particular user. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/journals/user/{id}/inspiration/{id}": {
+      "get": {
+        "tags": [
+          "journals"
+        ],
+        "summary": "Retrieve all journal entries by user and by inspiration id",
+        "description": "This endpoint retrieves all journal entries based on the id of a particular user as well as the inspiration id. Must be logged in.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plans/": {
+      "get": {
+        "tags": [
           "plans"
         ],
-        "description": "",
+        "summary": "Retrieve all plans",
+        "description": "This endpoint retrieves all plans.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Create a new plan",
+        "description": "This endpoint creates a new plan. Must be logged in.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "example": "any"
+                },
+                "inspiration_id": {
+                  "example": "any"
+                },
+                "plan_type": {
+                  "example": "any"
+                },
+                "plan": {
+                  "example": "any"
+                },
+                "schedule": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/plans/{id}": {
+      "get": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Retrieve a single plan",
+        "description": "This endpoint retrieves a single plans based on id.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Update a plan",
+        "description": "This endpoint updates a plan based on id. Must be logged in.",
         "parameters": [
           {
             "name": "id",
@@ -537,6 +854,9 @@
           "204": {
             "description": "No Content"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -546,7 +866,8 @@
         "tags": [
           "plans"
         ],
-        "description": "",
+        "summary": "Delete a plan",
+        "description": "This endpoint deletes a plan based on id. Must be logged in.",
         "parameters": [
           {
             "name": "id",
@@ -559,21 +880,25 @@
           "204": {
             "description": "No Content"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/plans/user/{id}": {
+    "/plans/user/{user_id}": {
       "get": {
         "tags": [
           "plans"
         ],
-        "description": "",
+        "summary": "Retrieves all plans by a user",
+        "description": "This endpoint retrieves all plans based on the id of a particular user. Must be logged in.",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -582,6 +907,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -594,7 +922,8 @@
         "tags": [
           "plans"
         ],
-        "description": "",
+        "summary": "Retrieves all plans by a user and inspiration id",
+        "description": "This endpoint retrieves all plans based on the id of a particular user as well as the id of the inspiration. Must be logged in.",
         "parameters": [
           {
             "name": "id",
@@ -607,12 +936,14 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     }
-  },
-  "defaultTag": "default"
+  }
 }

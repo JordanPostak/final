@@ -60,15 +60,20 @@ passport.deserializeUser((user, done) => {
 });
 
 app.get('/', (req, res) => {
+
     if (req.session.user !== undefined) {
+        const userid = req.session.user.id;
         const displayName = req.session.user.displayName;
         const profilePicture = req.session.user.photos[0].value;
         res.send(`
             <h1>Logged in as ${displayName}</h1>
+            <h2>Use this to represent your user_id for collection fields in swagger: ${userid}</h2>
             <img src="${profilePicture}" alt="Profile Picture">
         `);
     } else {
-        res.send("Logged Out");
+        res.send(`
+        <h1>Logged Out</h1>
+    `);
     }
 });
 

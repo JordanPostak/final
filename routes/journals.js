@@ -3,12 +3,14 @@
 const express = require('express');
 const router = express.Router();
 const journalsController = require('../controllers/journals');
+const { isAuthenticated } = require('../middleware/authenticate');
 
-router.post('/', journalsController.createJournalEntry);
-router.get('/:id', journalsController.getJournalEntryById);
-router.put('/:id', journalsController.updateJournalEntryById);
-router.delete('/:id', journalsController.deleteJournalEntryById);
-router.get('/user/:id', journalsController.getJournalEntriesByUserId);
-router.get('/user/:id/inspiration/:id', journalsController.getJournalEntriesByUserIdAndInspirationId);
+router.get('/', journalsController.getAllJournalEntries);
+router.post('/', isAuthenticated, journalsController.createJournalEntry);
+router.get('/:id', isAuthenticated, journalsController.getJournalEntryById);
+router.put('/:id', isAuthenticated, journalsController.updateJournalEntryById);
+router.delete('/:id', isAuthenticated, journalsController.deleteJournalEntryById);
+router.get('/user/:id', isAuthenticated, journalsController.getJournalEntriesByUserId);
+router.get('/user/:id/inspiration/:id', isAuthenticated, journalsController.getJournalEntriesByUserIdAndInspirationId);
 
 module.exports = router;

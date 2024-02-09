@@ -3,6 +3,22 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../data/database');
 
+const getAllJournalEntries= async (req, res) => {
+    //#swagger.tags=['journals']
+    const { id } = req.params;
+    try {
+        const journal = await mongodb.getDatabase().db('seerstone').collection('journals').findOne({ _id: ObjectId(id) });
+        if (journal) {
+            res.status(200).json(journal);
+        } else {
+            res.status(404).json({ error: 'Journal entry not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 const getJournalEntryById = async (req, res) => {
     //#swagger.tags=['journals']
     const { id } = req.params;
@@ -21,7 +37,18 @@ const getJournalEntryById = async (req, res) => {
 
 const createJournalEntry = async (req, res) => {
     //#swagger.tags=['journals']
-    const newJournal = req.body;
+    const { 
+        user_id, 
+        date, 
+        entry, 
+        inspiration_id 
+    } = req.body;
+    const newJournal = {
+        user_id,
+        date,
+        entry,
+        inspiration_id
+    };
     try {
         const result = await mongodb.getDatabase().db('seerstone').collection('journals').insertOne(newJournal);
         res.status(201).json(result.ops[0]);
@@ -34,7 +61,20 @@ const createJournalEntry = async (req, res) => {
 const updateJournalEntryById = async (req, res) => {
     //#swagger.tags=['journals']
     const { id } = req.params;
-    const updatedJournal = req.body;
+    const {
+        user_id,
+        date,
+        entry,
+        inspiration_id
+    } = req.body;
+
+    const updatedJournal = {
+        user_id,
+        date,
+        entry,
+        inspiration_id
+    };
+
     try {
         const result = await mongodb.getDatabase().db('seerstone').collection('journals').updateOne(
             { _id: ObjectId(id) },
@@ -92,6 +132,7 @@ const getJournalEntriesByUserIdAndInspirationId = async (req, res) => {
 };
 
 module.exports = {
+    getAllJournalEntries,
     getJournalEntryById,
     createJournalEntry,
     updateJournalEntryById,
