@@ -187,9 +187,7 @@
     },
     "/inspirations/": {
       "get": {
-        "tags": [
-          "inspirations"
-        ],
+        "tags": ["inspirations"],
         "summary": "Retrieve all inspirations",
         "description": "This endpoint retrieves all inspirations.",
         "responses": {
@@ -202,9 +200,7 @@
         }
       },
       "post": {
-        "tags": [
-          "inspirations"
-        ],
+        "tags": ["inspirations"],
         "summary": "Creates a new inspiration",
         "description": "This endpoint creates a new inspiration. Must be logged in.",
         "parameters": [
@@ -214,37 +210,18 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user_id": {
-                  "example": "any"
-                },
-                "type": {
-                  "example": "any"
-                },
-                "step": {
-                  "example": "any"
-                },
-                "parent_id": {
-                  "example": "any"
-                },
-                "child_id": {
-                  "example": "any"
-                },
-                "evidence": {
-                  "example": "any"
-                },
-                "acted_on": {
-                  "example": "any"
-                },
-                "planned": {
-                  "example": "any"
-                },
-                "reviewed": {
-                  "example": "any"
-                },
-                "recorded": {
-                  "example": "any"
-                }
-              }
+                "user_id": { "type": "string", "example": "any" },
+                "type": { "type": "string", "example": "any" },
+                "step": { "type": "string", "example": "any" },
+                "parent_id": { "type": "string", "example": "any" },
+                "child_id": { "type": "string", "example": "any" },
+                "evidence": { "type": "string", "example": "any" },
+                "acted_on": { "type": "string", "example": "any" },
+                "planned": { "type": "string", "example": "any" },
+                "reviewed": { "type": "string", "example": "any" },
+                "recorded": { "type": "string", "example": "any" }
+              },
+              "required": ["user_id", "type", "step"]
             }
           }
         ],
@@ -263,9 +240,7 @@
     },
     "/inspirations/{id}": {
       "get": {
-        "tags": [
-          "inspirations"
-        ],
+        "tags": ["inspirations"],
         "summary": "Retrieves a single inspiration",
         "description": "This endpoint retrieves a single inspiration based on id.",
         "parameters": [
@@ -292,9 +267,7 @@
         }
       },
       "put": {
-        "tags": [
-          "inspirations"
-        ],
+        "tags": ["inspirations"],
         "summary": "Update a single inspiration",
         "description": "This endpoint updates a single inspiration based on id. Must be logged in",
         "parameters": [
@@ -310,36 +283,16 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user_id": {
-                  "example": "any"
-                },
-                "type": {
-                  "example": "any"
-                },
-                "step": {
-                  "example": "any"
-                },
-                "parent_id": {
-                  "example": "any"
-                },
-                "child_id": {
-                  "example": "any"
-                },
-                "evidence": {
-                  "example": "any"
-                },
-                "acted_on": {
-                  "example": "any"
-                },
-                "planned": {
-                  "example": "any"
-                },
-                "reviewed": {
-                  "example": "any"
-                },
-                "recorded": {
-                  "example": "any"
-                }
+                "user_id": { "type": "string", "example": "any" },
+                "type": { "type": "string", "example": "any" },
+                "step": { "type": "string", "example": "any" },
+                "parent_id": { "type": "string", "example": "any" },
+                "child_id": { "type": "string", "example": "any" },
+                "evidence": { "type": "string", "example": "any" },
+                "acted_on": { "type": "string", "example": "any" },
+                "planned": { "type": "string", "example": "any" },
+                "reviewed": { "type": "string", "example": "any" },
+                "recorded": { "type": "string", "example": "any" }
               }
             }
           }
@@ -360,9 +313,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "inspirations"
-        ],
+        "tags": ["inspirations"],
         "summary": "Delete an inspiration",
         "description": "This endpoint deletes an inspiration based on id. Must be logged in",
         "parameters": [
@@ -391,11 +342,9 @@
     },
     "/inspirations/user/{id}": {
       "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "summary": "Retreive all inspirations of a particular user",
-        "description": "This endpoint retreives all inspirations based on the id of a particular user. Must be logged in",
+        "tags": ["inspirations"],
+        "summary": "Retrieve all inspirations of a particular user",
+        "description": "This endpoint retrieves all inspirations based on the id of a particular user. Must be logged in",
         "parameters": [
           {
             "name": "id",
@@ -419,11 +368,9 @@
     },
     "/inspirations/user/{id}/type/{type}": {
       "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "summary": "Retreive all inspirations of a particular user and specific type",
-        "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular type. Must be logged in",
+        "tags": ["inspirations"],
+        "summary": "Retrieve all inspirations of a particular user and specific type",
+        "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular type. Must be logged in",
         "parameters": [
           {
             "name": "id",
@@ -453,11 +400,9 @@
     },
     "/inspirations/user/{id}/step/{step}": {
       "get": {
-        "tags": [
-          "inspirations"
-        ],
-        "summary": "Retreive all inspirations of a particular user and specific step",
-        "description": "This endpoint retreives all inspirations based on the id of a particular user and of a particular step. Must be logged in",
+        "tags": ["inspirations"],
+        "summary": "Retrieve all inspirations of a particular user and specific step",
+        "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular step. Must be logged in",
         "parameters": [
           {
             "name": "id",
