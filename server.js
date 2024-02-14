@@ -68,6 +68,7 @@ app.get('/', (req, res) => {
         res.send(`
             <h1>Logged in as ${displayName}</h1>
             <h2>Use this to represent your user_id for collection fields in swagger: ${userid}</h2>
+            <h2><a href="http://localhost:3000/api-docs">Click here to go to Swagger</a></h2>
             <img src="${profilePicture}" alt="Profile Picture">
         `);
     } else {

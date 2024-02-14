@@ -5,10 +5,10 @@
     "description": "API documentation for Final Project",
     "version": "1.0.0"
   },
-  "host": "seerstoneapi.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/users/": {
@@ -340,22 +340,34 @@
         }
       }
     },
-    "/inspirations/user/{id}": {
+    "/inspirations/user_id/{user_id}": {
       "get": {
         "tags": ["inspirations"],
         "summary": "Retrieve all inspirations of a particular user",
         "description": "This endpoint retrieves all inspirations based on the id of a particular user. Must be logged in",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -366,14 +378,14 @@
         }
       }
     },
-    "/inspirations/user/{id}/type/{type}": {
+    "/inspirations/user_id/{user_id}/type/{type}": {
       "get": {
         "tags": ["inspirations"],
         "summary": "Retrieve all inspirations of a particular user and specific type",
         "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular type. Must be logged in",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -398,14 +410,14 @@
         }
       }
     },
-    "/inspirations/user/{id}/step/{step}": {
+    "/inspirations/user_id/{user_id}/step/{step}": {
       "get": {
         "tags": ["inspirations"],
         "summary": "Retrieve all inspirations of a particular user and specific step",
         "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular step. Must be logged in",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
