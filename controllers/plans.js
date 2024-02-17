@@ -7,9 +7,9 @@ const getAllPlanEntries = async (req, res) => {
     //#swagger.tags=['plans']
     try {
         const result = await mongodb.getDatabase().db('seerstone').collection('plans').find();
-        result.toArray().then((blogs) => {
+        result.toArray().then((plans) => {
             res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(blogs);
+            res.status(200).json(plans);
         });
     } catch (error) {
         console.error(error);
@@ -19,16 +19,18 @@ const getAllPlanEntries = async (req, res) => {
 
 const getPlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
-    const plangId = req.params.id;
-    if (!ObjectId.isValid(blogId)) {
+    const planId = req.params.id;
+    if (!ObjectId.isValid(planId)) {
         return res.status(400).json({ error: 'Invalid plan ID' });
     }
 
     try {
-        const result = await mongodb.getDatabase().db('seerstone').collection('plan').find({ _id: ObjectId(plangId) });
-        result.toArray().then((plans) => {
+        const cursor = await mongodb.getDatabase().db('seerstone').collection('plans').find({ _id: new ObjectId(planId) });
+
+        cursor.toArray().then((plans) => {
+
             if (plans.length === 0) {
-                return res.status(404).json({ error: 'Plan not found' });
+                return res.status(404).json({ error: 'plan not found' });
             }
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(plans[0]);
@@ -41,60 +43,95 @@ const getPlanEntryById = async (req, res) => {
 
 const createPlanEntry = async (req, res) => {
     //#swagger.tags=['plans']
-    try {
-        const plan = {
-            user_id: req.body.user_id,
-            inspiration_id: req.body.inspiration_id,
-            plan_type: req.body.plan_type,
-            plan: req.body.plan,
-            schedule: req.body.schedule,
-        };
+    const { 
+        user_id,  
+        inspiration_id,
+        plan_type,
+        plan,
+        schedule
+    } = req.body;
 
-        const response = await mongodb.getDatabase().db('seerstone').collection('plans').insertOne(plan);
+    // Data validation
+    if (!user_id || !inspiration_id || !plan_type || !plan || !schedule) {
+        return res.status(400).json({ error: "user_id, inspiration_id, plan_type, plan and schedule are required fields." });
+    }
+
+    // Create the new journal object
+
+    const newPlan = {
+        user_id,  
+        inspiration_id,
+        plan_type,
+        plan,
+        schedule
+    };
+    
+    try {
+        const response = await mongodb.getDatabase().db('seerstone')
+            .collection('plans')
+            .insertOne(newPlan);
+
+        // Check if the journal was successfully updated
         if (response.acknowledged) {
-            res.status(204).send();
+            return res.status(201).json({ message: 'Plan successfully created', plan: newPlan });// Successfully created
         } else {
-            res.status(500).json(response.error || 'Some error occurred while creating the plan.');
+            return res.status(500).json('Some error occurred while creating the plan.');// Internal server error
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json(error.message || 'Some error occurred while creating the plan.');// Internal server error
     }
 };
 
 const updatePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
-    try {
-        const planId = ObjectId(req.params.id);
-        const plan = {
-            user_id: req.body.user_id,
-            inspiration_id: req.body.inspiration_id,
-            plan_type: req.body.plan_type,
-            plan: req.body.plan,
-            schedule: req.body.schedule,
-        };
+    const planId = new ObjectId(req.params.id);
+    const { 
+        user_id,  
+        inspiration_id,
+        plan_type,
+        plan,
+        schedule
+    } = req.body;
 
-        const response = await mongodb.getDatabase().db('seerstone').collection('plans').replaceOne({ _id: planId }, plan);
+    // Data validation
+    if (!user_id || !inspiration_id || !plan_type || !plan || !schedule) {
+        return res.status(400).json({ error: "user_id, inspiration_id, plan_type, plan and schedule are required fields." });
+    }
+
+    // Create the new journal object
+
+    const updatedPlan = {
+        user_id,  
+        inspiration_id,
+        plan_type,
+        plan,
+        schedule
+    };
+
+    try {
+        // Update the plan in the database
+        const response = await mongodb.getDatabase().db('seerstone').collection('plans').replaceOne({ _id: planId }, updatedPlan);
+
+        // Check if the plan was successfully updated
         if (response.modifiedCount > 0) {
-            res.status(204).send();
+            return res.status(200).json({ message: 'Plan successfully updated', plan: updatedPlan}); // Successfully updated
         } else {
-            res.status(500).json(response.error || 'Some error occurred while updating the plan.');
+            return res.status(404).json({ error: "Plan not found." }); // Plan with given ID not found
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json(error.message || 'Some error occurred while updating the plan.'); // Internal server error
     }
 };
 
 const deletePlanEntryById = async (req, res) => {
     //#swagger.tags=['plans']
     try {
-        const planId = ObjectId(req.params.id);
+        const planId = new ObjectId(req.params.id);
         const response = await mongodb.getDatabase().db('seerstone').collection('plans').deleteOne({ _id: planId });
         if (response.deletedCount > 0) {
-            res.status(204).send();
+            res.status(200).json({ message: 'Plan successfully deleted'});
         } else {
-            res.status(500).json(response.error || 'Some error occurred while deleting the plan.');
+            res.status(404).json(response.error || 'Some error occurred while deleting the plan.');
         }
     } catch (error) {
         console.error(error);
@@ -104,10 +141,24 @@ const deletePlanEntryById = async (req, res) => {
 
 const getPlanEntriesByUserId = async (req, res) => {
     //#swagger.tags=['plans']
-    const { id } = req.params;
+    const { user_id } = req.params; // Access user_id from route parameters
+    
+    if (!user_id) {
+        return res.status(400).json({ error: 'user_id is required' });
+    }
+    
     try {
-        const plans = await mongodb.getDatabase().db('seerstone').collection('plans').find({ user_id: id }).toArray();
-        res.status(200).json(plans);
+        const journals = await mongodb.getDatabase()
+            .db('seerstone')
+            .collection('plans')
+            .find({ user_id: user_id })
+            .toArray();
+
+        if (journals.length === 0) {
+            return res.status(404).json({ error: 'No plans found for the provided user_id' });
+        }
+
+        res.status(200).json(journals);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -116,9 +167,12 @@ const getPlanEntriesByUserId = async (req, res) => {
 
 const getPlanEntriesByUserIdAndInspirationId = async (req, res) => {
     //#swagger.tags=['plans']
-    const { id } = req.params;
+    const { user_id, inspiration_id } = req.params; // Use req.params to access route parameters
+    if (!user_id || !inspiration_id) {
+        return res.status(400).json({ error: 'user_id and inspiration_id are required' });
+    }
     try {
-        const plans = await mongodb.getDatabase().db('seerstone').collection('plans').find({ user_id: id, inspiration_id: req.params.inspiration_id }).toArray();
+        const plans = await mongodb.getDatabase().db('seerstone').collection('plans').find({ user_id, inspiration_id }).toArray();
         res.status(200).json(plans);
     } catch (error) {
         console.error(error);

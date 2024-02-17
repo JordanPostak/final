@@ -13,14 +13,10 @@
   "paths": {
     "/users/": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Retrieve all user profiles",
         "description": "This endpoint retrieves all user profiles.",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -31,32 +27,36 @@
         }
       },
       "post": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Create user profile",
-        "description": "This endpoint creates a new user profiles. Must be logged in.",
+        "description": "This endpoint creates a new user profile.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "12345"
                 },
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "johndoe"
                 },
                 "first_name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "John"
                 },
                 "last_name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Doe"
                 },
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "john.doe@example.com"
                 }
               }
             }
@@ -77,14 +77,10 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Get single profile",
         "description": "This endpoint retrieves a single user profile based on the id.",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -109,11 +105,9 @@
         }
       },
       "put": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Update a user profile",
-        "description": "This endpoint updates a user profile based on the user id. Must be logged in.",
+        "description": "This endpoint updates a user profile based on the user id.",
         "parameters": [
           {
             "name": "id",
@@ -128,19 +122,24 @@
               "type": "object",
               "properties": {
                 "user_id": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "12345"
                 },
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "johndoe"
                 },
                 "first_name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "John"
                 },
                 "last_name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Doe"
                 },
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "john.doe@example.com"
                 }
               }
             }
@@ -159,11 +158,9 @@
         }
       },
       "delete": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "summary": "Delete a user profile",
-        "description": "This endpoint deletes a user profile based on the user id. Must be logged in.",
+        "description": "This endpoint deletes a user profile based on the user id.",
         "parameters": [
           {
             "name": "id",
@@ -444,11 +441,9 @@
     },
     "/journals/": {
       "get": {
-        "tags": [
-          "journals"
-        ],
-        "summary": "Retreive all journal entries",
-        "description": "This endpoint retreives all journal entries.",
+        "tags": ["journals"],
+        "summary": "Retrieve all journal entries",
+        "description": "This endpoint retrieves all journal entries.",
         "responses": {
           "200": {
             "description": "OK"
@@ -462,9 +457,7 @@
         }
       },
       "post": {
-        "tags": [
-          "journals"
-        ],
+        "tags": ["journals"],
         "summary": "Create a journal entry",
         "description": "This endpoint creates a journal entry. Must be logged in.",
         "parameters": [
@@ -475,18 +468,23 @@
               "type": "object",
               "properties": {
                 "user_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "date": {
+                  "type": "string",
                   "example": "any"
                 },
                 "entry": {
+                  "type": "string",
                   "example": "any"
                 },
                 "inspiration_id": {
+                  "type": "string",
                   "example": "any"
                 }
-              }
+              },
+              "required": ["user_id", "date", "entry", "inspiration_id"]
             }
           }
         ],
@@ -505,11 +503,9 @@
     },
     "/journals/{id}": {
       "get": {
-        "tags": [
-          "journals"
-        ],
-        "summary": "Retreive a single journal entry",
-        "description": "This endpoint retreives a single journal entry based on id.",
+        "tags": ["journals"],
+        "summary": "Retrieve a single journal entry",
+        "description": "This endpoint retrieves a single journal entry based on id.",
         "parameters": [
           {
             "name": "id",
@@ -534,9 +530,7 @@
         }
       },
       "put": {
-        "tags": [
-          "journals"
-        ],
+        "tags": ["journals"],
         "summary": "Update a journal entry",
         "description": "This endpoint updates a journal entry based on id. Must be logged in.",
         "parameters": [
@@ -553,18 +547,23 @@
               "type": "object",
               "properties": {
                 "user_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "date": {
+                  "type": "string",
                   "example": "any"
                 },
                 "entry": {
+                  "type": "string",
                   "example": "any"
                 },
                 "inspiration_id": {
+                  "type": "string",
                   "example": "any"
                 }
-              }
+              },
+              "required": ["user_id", "date", "entry", "inspiration_id"]
             }
           }
         ],
@@ -584,9 +583,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "journals"
-        ],
+        "tags": ["journals"],
         "summary": "Delete a journal entry",
         "description": "This endpoint deletes a journal entry based on id. Must be logged in.",
         "parameters": [
@@ -613,16 +610,14 @@
         }
       }
     },
-    "/journals/user/{id}": {
+    "/journals/user_id/{user_id}": {
       "get": {
-        "tags": [
-          "journals"
-        ],
+        "tags": ["journals"],
         "summary": "Retrieve all journal entries by user",
         "description": "This endpoint retrieves all journal entries based on the id of a particular user. Must be logged in.",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -641,16 +636,20 @@
         }
       }
     },
-    "/journals/user/{id}/inspiration/{id}": {
+    "/journals/user_id/{user_id}/inspiration_id/{inspiration_id}": {
       "get": {
-        "tags": [
-          "journals"
-        ],
+        "tags": ["journals"],
         "summary": "Retrieve all journal entries by user and by inspiration id",
         "description": "This endpoint retrieves all journal entries based on the id of a particular user as well as the inspiration id. Must be logged in.",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "inspiration_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -671,14 +670,10 @@
     },
     "/plans/": {
       "get": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Retrieve all plans",
         "description": "This endpoint retrieves all plans.",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -689,9 +684,7 @@
         }
       },
       "post": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Create a new plan",
         "description": "This endpoint creates a new plan. Must be logged in.",
         "parameters": [
@@ -702,21 +695,27 @@
               "type": "object",
               "properties": {
                 "user_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "inspiration_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "plan_type": {
+                  "type": "string",
                   "example": "any"
                 },
                 "plan": {
+                  "type": "string",
                   "example": "any"
                 },
                 "schedule": {
+                  "type": "string",
                   "example": "any"
                 }
-              }
+              },
+              "required": ["user_id", "inspiration_id", "plan_type", "plan", "schedule"]
             }
           }
         ],
@@ -735,14 +734,10 @@
     },
     "/plans/{id}": {
       "get": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Retrieve a single plan",
-        "description": "This endpoint retrieves a single plans based on id.",
-        "produces": [
-          "application/json"
-        ],
+        "description": "This endpoint retrieves a single plan based on id.",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -770,9 +765,7 @@
         }
       },
       "put": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Update a plan",
         "description": "This endpoint updates a plan based on id. Must be logged in.",
         "parameters": [
@@ -789,21 +782,27 @@
               "type": "object",
               "properties": {
                 "user_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "inspiration_id": {
+                  "type": "string",
                   "example": "any"
                 },
                 "plan_type": {
+                  "type": "string",
                   "example": "any"
                 },
                 "plan": {
+                  "type": "string",
                   "example": "any"
                 },
                 "schedule": {
+                  "type": "string",
                   "example": "any"
                 }
-              }
+              },
+              "required": ["user_id", "inspiration_id", "plan_type", "plan", "schedule"]
             }
           }
         ],
@@ -820,9 +819,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Delete a plan",
         "description": "This endpoint deletes a plan based on id. Must be logged in.",
         "parameters": [
@@ -846,11 +843,9 @@
         }
       }
     },
-    "/plans/user/{user_id}": {
+    "/plans/user_id/{user_id}": {
       "get": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Retrieve all plans by a user",
         "description": "This endpoint retrieves all plans based on the id of a particular user. Must be logged in.",
         "parameters": [
@@ -874,16 +869,20 @@
         }
       }
     },
-    "/plans/user/{id}/inspiration/{id}": {
+    "/plans/user_id/{user_id}/inspiration_id/{inspiration_id}": {
       "get": {
-        "tags": [
-          "plans"
-        ],
+        "tags": ["plans"],
         "summary": "Retrieve all plans by a user and inspiration id",
         "description": "This endpoint retrieves all plans based on the id of a particular user as well as the id of the inspiration. Must be logged in.",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "inspiration_id",
             "in": "path",
             "required": true,
             "type": "string"

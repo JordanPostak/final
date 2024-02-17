@@ -53,7 +53,7 @@ const getSingleInspiration = async (req, res) => {
         acted_on,
         planned,
         reviewed,
-        recorded,
+        recorded
     } = req.body;
 
     // Data validation
@@ -72,7 +72,7 @@ const getSingleInspiration = async (req, res) => {
         acted_on,
         planned,
         reviewed,
-        recorded,
+        recorded
     };
 
     try {
@@ -157,6 +157,7 @@ const deleteInspiration = async (req, res) => {
 };
 
 const getInspirationsByUserId = async (req, res) => {
+    // #swagger.tags=['inspirations']
     const { user_id } = req.params; // Access user_id from route parameters
     
     if (!user_id) {
@@ -182,6 +183,7 @@ const getInspirationsByUserId = async (req, res) => {
 };
 
 const getInspirationsByUserIdAndType = async (req, res) => {
+    // #swagger.tags=['inspirations']
     const { user_id, type } = req.params; // Use req.params to access route parameters
     if (!user_id || !type) {
         return res.status(400).json({ error: 'user_id and type are required' });
@@ -196,6 +198,7 @@ const getInspirationsByUserIdAndType = async (req, res) => {
 };
 
 const getInspirationsByUserIdAndStep = async (req, res) => {
+    // #swagger.tags=['inspirations']
     const { user_id, step } = req.params; // Use req.params to access route parameters
     if (!user_id || !step) {
         return res.status(400).json({ error: 'user_id and step are required' });

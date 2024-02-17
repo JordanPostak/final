@@ -19,14 +19,16 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     //#swagger.tags=['users']
-    try {
-        const userId = req.params.userId;
-        if (!ObjectId.isValid(userId)) {
-            return res.status(400).json({ error: 'Invalid user ID' });
-        }
+    const userId = req.params.id;
+    if (!ObjectId.isValid(userId)) {
+        return res.status(400).json({ error: 'Invalid userID' });
+    }
 
-        const result = await mongodb.getDatabase().db('seerstone').collection('users').find({ _id: ObjectId(userId) });
-        result.toArray().then((users) => {
+    try {
+        const cursor = await mongodb.getDatabase().db('seerstone').collection('users').find({ _id: new ObjectId(userId) });
+
+        cursor.toArray().then((users) => {
+
             if (users.length === 0) {
                 return res.status(404).json({ error: 'User not found' });
             }
@@ -41,76 +43,93 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
     //#swagger.tags=['users']
+    const {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email
+    } = req.body;
+
+    // Data validation
+    if (!user_id || !username || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "user_id, username, first_name, last_name and email are required fields." });
+    }
+
+    // Create the new inspiration object
+    const newUser = {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email
+    };
+
     try {
-        const { 
-            user_id, 
-            username, 
-            first_name, 
-            last_name, 
-            email 
-        } = req.body;
+        const response = await mongodb.getDatabase().db('seerstone')
+            .collection('users')
+            .insertOne(newUser);
 
-        const newUser = {
-            user_id,
-            username,
-            first_name,
-            last_name,
-            email
-        };
-
-        const result = await mongodb.getDatabase().db('seerstone').collection('users').insertOne(newUser);
-        if (result.acknowledged) {
-            res.status(201).json(result.ops[0]);
+        // Check if the inspiration was successfully updated
+        if (response.acknowledged) {
+            return res.status(201).json({ message: 'User successfully created', user: newUser });// Successfully created
         } else {
-            res.status(500).json(response.error || 'Some error occurred while creating the user.');
+            return res.status(500).json('Some error occurred while creating the user.');// Internal server error
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json(error.message || 'Some error occurred while creating the user.');// Internal server error
     }
 };
 
 const updateUserById = async (req, res) => {
     //#swagger.tags=['users']
+    const userId = new ObjectId(req.params.id);
+    const {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email
+    } = req.body;
+
+    // Data validation
+    if (!user_id || !username || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "user_id, username, first_name, last_name and email are required fields." });
+    }
+
+    // Create the new inspiration object
+    const updatedUser = {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email
+    };
+
     try {
-        const userId = ObjectId(req.params.id);
-        const { 
-            user_id, 
-            username, 
-            first_name, 
-            last_name, 
-            email 
-        } = req.body;
+        // Update the inspiration in the database
+        const response = await mongodb.getDatabase().db('seerstone').collection('users').replaceOne({ _id: userId }, updatedUser);
 
-        const newUser = {
-            user_id,
-            username,
-            first_name,
-            last_name,
-            email
-        };
-
-        const response = await mongodb.getDatabase().db('seerstone').collection('users').replaceOne({ _id: userId }, newUser);
+        // Check if the inspiration was successfully updated
         if (response.modifiedCount > 0) {
-            res.status(204).send();
+            return res.status(200).json({ message: 'User successfully updated', user: updatedUser}); // Successfully updated
         } else {
-            res.status(500).json(response.error || 'Some error occurred while updating the user.');
+            return res.status(404).json({ error: "User not found." }); // User with given ID not found
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json(error.message || 'Some error occurred while updating the user.'); // Internal server error
     }
 };
 
 const deleteUserById = async (req, res) => {
     //#swagger.tags=['users']
     try {
-        const userId = ObjectId(req.params.id);
+        const userId = new ObjectId(req.params.id);
         const response = await mongodb.getDatabase().db('seerstone').collection('users').deleteOne({ _id: userId });
         if (response.deletedCount > 0) {
-            res.status(204).send();
+            res.status(200).json({ message: 'User successfully deleted'});
         } else {
-            res.status(500).json(response.error || 'Some error occurred while deleting the user.');
+            res.status(404).json(response.error || 'Some error occurred while deleting the user.');
         }
     } catch (error) {
         console.error(error);

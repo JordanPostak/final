@@ -10,7 +10,7 @@ router.post('/', isAuthenticated, journalsController.createJournalEntry);
 router.get('/:id', isAuthenticated, journalsController.getJournalEntryById);
 router.put('/:id', isAuthenticated, journalsController.updateJournalEntryById);
 router.delete('/:id', isAuthenticated, journalsController.deleteJournalEntryById);
-router.get('/user/:id', isAuthenticated, journalsController.getJournalEntriesByUserId);
-router.get('/user/:id/inspiration/:id', isAuthenticated, journalsController.getJournalEntriesByUserIdAndInspirationId);
+router.get('/user_id/:user_id', isAuthenticated, journalsController.getJournalEntriesByUserId);
+router.get('/user_id/:user_id/inspiration_id/:inspiration_id', isAuthenticated, journalsController.getJournalEntriesByUserIdAndInspirationId);
 
 module.exports = router;
