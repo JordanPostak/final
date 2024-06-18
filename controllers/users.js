@@ -46,20 +46,22 @@ const createUser = async (req, res) => {
     const {
         user_id,
         username,
+        password,
         first_name,
         last_name,
         email
     } = req.body;
 
     // Data validation
-    if (!user_id || !username || !first_name || !last_name || !email) {
-        return res.status(400).json({ error: "user_id, username, first_name, last_name and email are required fields." });
+    if (!user_id || !username || !password || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "user_id, username, password, first_name, last_name and email are required fields." });
     }
 
     // Create the new inspiration object
     const newUser = {
         user_id,
         username,
+        password,
         first_name,
         last_name,
         email
@@ -87,20 +89,22 @@ const updateUserById = async (req, res) => {
     const {
         user_id,
         username,
+        password,
         first_name,
         last_name,
         email
     } = req.body;
 
     // Data validation
-    if (!user_id || !username || !first_name || !last_name || !email) {
-        return res.status(400).json({ error: "user_id, username, first_name, last_name and email are required fields." });
+    if (!user_id || !username || !password || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "user_id, username, password, first_name, last_name and email are required fields." });
     }
 
     // Create the new inspiration object
     const updatedUser = {
         user_id,
         username,
+        password,
         first_name,
         last_name,
         email
