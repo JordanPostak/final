@@ -46,6 +46,10 @@
                   "type": "string",
                   "example": "johndoe"
                 },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                },
                 "first_name": {
                   "type": "string",
                   "example": "John"
@@ -128,6 +132,10 @@
                 "username": {
                   "type": "string",
                   "example": "johndoe"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
                 },
                 "first_name": {
                   "type": "string",
