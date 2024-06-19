@@ -12,7 +12,7 @@ router.get('/', usersController.getAllUsers);
 router.get('/:id', usersController.getUserById);
 
 // Create a new user profile
-router.post('/', isAuthenticated, usersController.createUser);
+router.post('/', usersController.createUser);
 
 // Update user profile information by user ID
 router.put('/:id', isAuthenticated, usersController.updateUserById);
