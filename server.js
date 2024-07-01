@@ -51,14 +51,21 @@ app
             if (existingUser) {
                 return done(null, existingUser);
             } else {
+                let firstName = '';
+                let lastName = '';
+                if (profile.displayName) {
+                    const nameParts = profile.displayName.split(' ');
+                    firstName = nameParts[0];
+                    lastName = nameParts[nameParts.length - 1];
+                }
+    
                 const newUser = {
                     user_id: profile.id,
                     username: profile.username,
                     password: '', // Password is not provided by GitHub, handle it accordingly
-                    first_name: profile.displayName || '', // Use displayName if available
-                    last_name: '', // GitHub does not provide last name, handle it accordingly
+                    first_name: firstName,
+                    last_name: lastName,
                     email: (profile.emails && profile.emails[0] && profile.emails[0].value) || '', // Use the first email if available
-                    avatar_url: profile.photos[0].value // Store the avatar URL if needed
                 };
     
                 await usersCollection.insertOne(newUser);
