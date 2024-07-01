@@ -38,40 +38,36 @@ app
     .use(cors({ origin: ['http://localhost:3000', 'http://seerstoneapi.onrender.com', 'https://seerstoneapi.onrender.com'], credentials: true }))
     .use("/", require("./routes/index.js"));
 
-passport.use(new GitHubStrategy({
+    passport.use(new GitHubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL
     },
     async function(accessToken, refreshToken, profile, done) {
-
-        console.log('GitHub Profile:', profile);
-
         try {
-            const db = mongodb.getDatabase().db('seerstone');
-            const usersCollection = db.collection('users');
-            const user = await usersCollection.findOne({ user_id: profile.id });
-
-            if (!user) {
-                // Create a new user if one doesn't exist
+            const usersCollection = mongodb.getDatabase().db('seerstone').collection('users');
+            const existingUser = await usersCollection.findOne({ user_id: profile.id });
+    
+            if (existingUser) {
+                return done(null, existingUser);
+            } else {
                 const newUser = {
                     user_id: profile.id,
                     username: profile.username,
-                    password: '', // Set to an empty string as the password is managed by GitHub
-                    first_name: profile.displayName || '',
-                    last_name: '',
-                    email: (profile.emails && profile.emails[0].value) || ''
+                    password: '', // Password is not provided by GitHub, handle it accordingly
+                    first_name: profile.displayName || '', // Use displayName if available
+                    last_name: '', // GitHub does not provide last name, handle it accordingly
+                    email: (profile.emails && profile.emails[0] && profile.emails[0].value) || '', // Use the first email if available
+                    avatar_url: profile.photos[0].value // Store the avatar URL if needed
                 };
+    
                 await usersCollection.insertOne(newUser);
                 return done(null, newUser);
-            } else {
-                return done(null, user);
             }
-        } catch (error) {
-            return done(error);
+        } catch (err) {
+            return done(err);
         }
-    }
-));
+    }));
 
 passport.serializeUser((user, done) => {
     done(null, user._id);
