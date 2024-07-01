@@ -7,6 +7,7 @@ const passport = require('passport');
 const session = require('express-session');
 const GitHubStrategy = require('passport-github2').Strategy;
 const cors = require('cors');
+const usersController = require('./controllers/users'); // Import users controller
 
 const app = express();
 
@@ -19,11 +20,8 @@ app
         resave: false,
         saveUninitialized: true,
     }))
-    // This is the basic express session({..}) initialization.
     .use(passport.initialize())
-    // init passport on every route call.
     .use(passport.session())
-    // allow passport to use "express-session".
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader(
@@ -40,36 +38,60 @@ app
     .use(cors({ origin: ['http://localhost:3000', 'http://seerstoneapi.onrender.com', 'https://seerstoneapi.onrender.com'], credentials: true }))
     .use("/", require("./routes/index.js"));
 
-    passport.use(new GitHubStrategy({
+passport.use(new GitHubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL
     },
-    function(accessToken, refreshToken, profile, done) {
-        //User.findOrCreate({ githubId: profile.id }, function (err, user) {
-            return done(null, profile);
-        //})
+    async function(accessToken, refreshToken, profile, done) {
+        try {
+            const db = mongodb.getDatabase().db('seerstone');
+            const usersCollection = db.collection('users');
+            const user = await usersCollection.findOne({ user_id: profile.id });
+
+            if (!user) {
+                // Create a new user if one doesn't exist
+                const newUser = {
+                    user_id: profile.id,
+                    username: profile.username,
+                    password: '', // Set to an empty string as the password is managed by GitHub
+                    first_name: profile.displayName || '',
+                    last_name: '',
+                    email: (profile.emails && profile.emails[0].value) || ''
+                };
+                await usersCollection.insertOne(newUser);
+                return done(null, newUser);
+            } else {
+                return done(null, user);
+            }
+        } catch (error) {
+            return done(error);
+        }
     }
-    ));
+));
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 });
-passport.deserializeUser((user, done) => {
-    done(null, user);
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const db = mongodb.getDatabase().db('seerstone');
+        const user = await db.collection('users').findOne({ _id: new mongodb.ObjectId(id) });
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
 });
 
 app.get('/', (req, res) => {
-
     if (req.session.user !== undefined) {
-        const userid = req.session.user.id;
-        const displayName = req.session.user.displayName;
-        const profilePicture = req.session.user.photos[0].value;
+        const userid = req.session.user.user_id;
+        const displayName = req.session.user.username;
         res.send(`
             <h1>Logged in as ${displayName}</h1>
             <h2>Use this to represent your user_id for collection fields in swagger: ${userid}</h2>
             <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger</a></h2>
-            <img src="${profilePicture}" alt="Profile Picture">
         `);
     } else {
         res.send(`
