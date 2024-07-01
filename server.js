@@ -44,6 +44,9 @@ passport.use(new GitHubStrategy({
         callbackURL: process.env.CALLBACK_URL
     },
     async function(accessToken, refreshToken, profile, done) {
+
+        console.log('GitHub Profile:', profile);
+
         try {
             const db = mongodb.getDatabase().db('seerstone');
             const usersCollection = db.collection('users');
