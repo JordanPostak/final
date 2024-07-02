@@ -73,10 +73,6 @@
           "schema": {
             "type": "object",
             "properties": {
-              "user_id": {
-                "type": "string",
-                "example": "12345"
-              },
               "username": {
                 "type": "string",
                 "example": "johndoe"
