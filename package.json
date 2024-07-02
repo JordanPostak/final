@@ -4,6 +4,7 @@
     "description": "My final project",
     "main": "server.js",
     "scripts": {
+        "start": "node server.js", 
         "test": "jest --detectOpenHandles",
         "swagger": "node swagger.js"
     },
@@ -25,7 +26,6 @@
         "express-session": "^1.17.3",
         "mongodb": "^6.3.0",
         "passport": "^0.7.0",
-        "passport-github2": "^0.1.12",
         "swagger-ui-express": "^5.0.0"
     },
     "devDependencies": {
