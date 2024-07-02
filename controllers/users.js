@@ -41,10 +41,8 @@ const getUserById = async (req, res) => {
     }
 };
 
-const createUser = async (req, res) => {
-    //#swagger.tags=['users']
+const registerUser = async (req, res) => {
     const {
-        user_id,
         username,
         password,
         first_name,
@@ -53,15 +51,17 @@ const createUser = async (req, res) => {
     } = req.body;
 
     // Data validation
-    if (!user_id || !username || !password || !first_name || !last_name || !email) {
-        return res.status(400).json({ error: "user_id, username, password, first_name, last_name and email are required fields." });
+    if (!username || !password || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
 
-    // Create the new inspiration object
+    // Hash password
+    const hashedPassword = await hashPassword(password);
+
+    // Create the new user object
     const newUser = {
-        user_id,
         username,
-        password,
+        password: hashedPassword,
         first_name,
         last_name,
         email
@@ -72,14 +72,41 @@ const createUser = async (req, res) => {
             .collection('users')
             .insertOne(newUser);
 
-        // Check if the inspiration was successfully updated
         if (response.acknowledged) {
-            return res.status(201).json({ message: 'User successfully created', user: newUser });// Successfully created
+            return res.status(201).json({ message: 'User successfully registered', user: newUser });
         } else {
-            return res.status(500).json('Some error occurred while creating the user.');// Internal server error
+            return res.status(500).json('Failed to register user.');
         }
     } catch (error) {
-        return res.status(500).json(error.message || 'Some error occurred while creating the user.');// Internal server error
+        return res.status(500).json(error.message || 'Failed to register user.');
+    }
+};
+
+const loginUser = async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await mongodb.getDatabase().db('seerstone')
+            .collection('users')
+            .findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        // Compare hashed password
+        const isPasswordMatch = await comparePassword(password, user.password);
+
+        if (!isPasswordMatch) {
+            return res.status(401).json({ error: 'Invalid credentials.' });
+        }
+
+        // Set user session or generate JWT token
+        req.session.user = user;
+        res.status(200).json({ message: 'Login successful.', user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to authenticate.' });
     }
 };
 
@@ -143,7 +170,8 @@ const deleteUserById = async (req, res) => {
 
 module.exports = {
     getAllUsers,
-    createUser,
+    registerUser,
+    loginUser,
     getUserById,
     updateUserById,
     deleteUserById
