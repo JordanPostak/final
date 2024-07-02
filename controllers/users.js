@@ -2,6 +2,7 @@
 
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
+const { hashPassword, comparePassword } = require('../utils/passwordUtils');
 
 const getAllUsers = async (req, res) => {
     //#swagger.tags=['users']
@@ -28,7 +29,6 @@ const getUserById = async (req, res) => {
         const cursor = await mongodb.getDatabase().db('seerstone').collection('users').find({ _id: new ObjectId(userId) });
 
         cursor.toArray().then((users) => {
-
             if (users.length === 0) {
                 return res.status(404).json({ error: 'User not found' });
             }
@@ -42,13 +42,7 @@ const getUserById = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-    const {
-        username,
-        password,
-        first_name,
-        last_name,
-        email
-    } = req.body;
+    const { username, password, first_name, last_name, email } = req.body;
 
     // Data validation
     if (!username || !password || !first_name || !last_name || !email) {
@@ -68,9 +62,7 @@ const registerUser = async (req, res) => {
     };
 
     try {
-        const response = await mongodb.getDatabase().db('seerstone')
-            .collection('users')
-            .insertOne(newUser);
+        const response = await mongodb.getDatabase().db('seerstone').collection('users').insertOne(newUser);
 
         if (response.acknowledged) {
             return res.status(201).json({ message: 'User successfully registered', user: newUser });
@@ -86,9 +78,7 @@ const loginUser = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await mongodb.getDatabase().db('seerstone')
-            .collection('users')
-            .findOne({ username });
+        const user = await mongodb.getDatabase().db('seerstone').collection('users').findOne({ username });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
@@ -101,7 +91,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
-        // Set user session or generate JWT token
+        // Set user session
         req.session.user = user;
         res.status(200).json({ message: 'Login successful.', user });
     } catch (error) {
@@ -113,37 +103,32 @@ const loginUser = async (req, res) => {
 const updateUserById = async (req, res) => {
     //#swagger.tags=['users']
     const userId = new ObjectId(req.params.id);
-    const {
-        user_id,
-        username,
-        password,
-        first_name,
-        last_name,
-        email
-    } = req.body;
+    const { username, password, first_name, last_name, email } = req.body;
 
     // Data validation
-    if (!user_id || !username || !password || !first_name || !last_name || !email) {
-        return res.status(400).json({ error: "user_id, username, password, first_name, last_name and email are required fields." });
+    if (!username || !password || !first_name || !last_name || !email) {
+        return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
 
-    // Create the new inspiration object
+    // Hash password
+    const hashedPassword = await hashPassword(password);
+
+    // Create the updated user object
     const updatedUser = {
-        user_id,
         username,
-        password,
+        password: hashedPassword,
         first_name,
         last_name,
         email
     };
 
     try {
-        // Update the inspiration in the database
+        // Update the user in the database
         const response = await mongodb.getDatabase().db('seerstone').collection('users').replaceOne({ _id: userId }, updatedUser);
 
-        // Check if the inspiration was successfully updated
+        // Check if the user was successfully updated
         if (response.modifiedCount > 0) {
-            return res.status(200).json({ message: 'User successfully updated', user: updatedUser}); // Successfully updated
+            return res.status(200).json({ message: 'User successfully updated', user: updatedUser }); // Successfully updated
         } else {
             return res.status(404).json({ error: "User not found." }); // User with given ID not found
         }
@@ -158,7 +143,7 @@ const deleteUserById = async (req, res) => {
         const userId = new ObjectId(req.params.id);
         const response = await mongodb.getDatabase().db('seerstone').collection('users').deleteOne({ _id: userId });
         if (response.deletedCount > 0) {
-            res.status(200).json({ message: 'User successfully deleted'});
+            res.status(200).json({ message: 'User successfully deleted' });
         } else {
             res.status(404).json(response.error || 'Some error occurred while deleting the user.');
         }

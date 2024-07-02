@@ -12,6 +12,13 @@ async function hashPassword(password) {
     return hashedPassword;
 }
 
+// Function to compare the password with hashed password
+async function comparePassword(password, hashedPassword) {
+    const hashedInputPassword = await hashPassword(password);
+    return hashedInputPassword === hashedPassword;
+}
+
 module.exports = {
-    hashPassword
+    hashPassword,
+    comparePassword
 };
