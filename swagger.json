@@ -25,58 +25,6 @@
           "description": "Internal Server Error"
         }
       }
-    },
-    "post": {
-      "tags": ["users"],
-      "summary": "Create user profile",
-      "description": "This endpoint creates a new user profile.",
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "user_id": {
-                "type": "string",
-                "example": "12345"
-              },
-              "username": {
-                "type": "string",
-                "example": "johndoe"
-              },
-              "password": {
-                "type": "string",
-                "example": "1234"
-              },
-              "first_name": {
-                "type": "string",
-                "example": "John"
-              },
-              "last_name": {
-                "type": "string",
-                "example": "Doe"
-              },
-              "email": {
-                "type": "string",
-                "example": "john.doe@example.com"
-              }
-            }
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Created"
-        },
-        "401": {
-          "description": "Unauthorized"
-        },
-        "500": {
-          "description": "Internal Server Error"
-        }
-      }
     }
   },
   "/users/{id}": {
@@ -203,6 +151,10 @@
           "schema": {
             "type": "object",
             "properties": {
+              "user_id": {
+                "type": "string",
+                "example": "12345"
+              },
               "username": {
                 "type": "string",
                 "example": "johndoe"
@@ -224,7 +176,7 @@
                 "example": "john.doe@example.com"
               }
             },
-            "required": ["username", "password", "first_name", "last_name", "email"]
+            "required": ["user_id", "username", "password", "first_name", "last_name", "email"]
           }
         }
       ],
