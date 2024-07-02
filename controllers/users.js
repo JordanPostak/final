@@ -109,11 +109,11 @@ const loginUser = async (req, res) => {
 
 const updateUserById = async (req, res) => {
     //#swagger.tags=['users']
-    const userId = new ObjectId(req.params.id);
-    const { user_id, username, password, first_name, last_name, email } = req.body;
+    const userId = req.session.user.user_id; // Get user_id from session
+    const { username, password, first_name, last_name, email } = req.body;
 
     // Data validation
-    if (!user_id || !username || !password || !first_name || !last_name || !email) {
+    if (!username || !password || !first_name || !last_name || !email) {
         return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
 
@@ -122,9 +122,8 @@ const updateUserById = async (req, res) => {
 
     // Create the updated user object
     const updatedUser = {
-        user_id,
         username,
-        password,
+        password: hashedPassword,
         first_name,
         last_name,
         email
@@ -132,7 +131,7 @@ const updateUserById = async (req, res) => {
 
     try {
         // Update the user in the database
-        const response = await mongodb.getDatabase().db('seerstone').collection('users').replaceOne({ _id: userId }, updatedUser);
+        const response = await mongodb.getDatabase().db('seerstone').collection('users').replaceOne({ user_id: userId }, updatedUser);
 
         // Check if the user was successfully updated
         if (response.modifiedCount > 0) {
@@ -141,7 +140,8 @@ const updateUserById = async (req, res) => {
             return res.status(404).json({ error: "User not found." }); // User with given ID not found
         }
     } catch (error) {
-        return res.status(500).json(error.message || 'Some error occurred while updating the user.'); // Internal server error
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' }); // Internal server error
     }
 };
 
