@@ -115,22 +115,27 @@
     },
     "delete": {
       "tags": ["users"],
-      "summary": "Delete a user profile",
-      "description": "This endpoint deletes a user profile based on the user id.",
+      "summary": "Delete logged-in user profile",
+      "description": "Deletes the user profile of the currently authenticated user.",
       "parameters": [
         {
           "name": "id",
           "in": "path",
           "required": true,
-          "type": "string"
+          "schema": {
+            "type": "string"
+          }
         }
       ],
       "responses": {
-        "204": {
-          "description": "No Content"
+        "200": {
+          "description": "User successfully deleted"
         },
         "401": {
-          "description": "Unauthorized"
+          "description": "Unauthorized - User not logged in"
+        },
+        "404": {
+          "description": "User not found"
         },
         "500": {
           "description": "Internal Server Error"

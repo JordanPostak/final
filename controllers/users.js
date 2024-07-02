@@ -148,12 +148,13 @@ const updateUserById = async (req, res) => {
 const deleteUserById = async (req, res) => {
     //#swagger.tags=['users']
     try {
-        const userId = new ObjectId(req.params.id);
-        const response = await mongodb.getDatabase().db('seerstone').collection('users').deleteOne({ _id: userId });
+        const userId = req.session.user.user_id; // Get user_id from session
+        const response = await mongodb.getDatabase().db('seerstone').collection('users').deleteOne({ user_id: userId });
+
         if (response.deletedCount > 0) {
             res.status(200).json({ message: 'User successfully deleted' });
         } else {
-            res.status(404).json(response.error || 'Some error occurred while deleting the user.');
+            res.status(404).json({ error: 'User not found.' });
         }
     } catch (error) {
         console.error(error);
