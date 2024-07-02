@@ -92,12 +92,13 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
-        // Set user session
-        req.session.user = user;
 
         // Log session information
-        console.log(req.sessionID); // Check session ID
-        console.log(req.session);   // Check session data
+        console.log(req.session.user); // Check session user
+    
+
+        // Set user session
+        req.session.user = user;
 
         res.status(200).json({ message: 'Login successful.', user });
     } catch (error) {
