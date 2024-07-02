@@ -42,10 +42,10 @@ const getUserById = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-    const { username, password, first_name, last_name, email } = req.body;
+    const { user_id, username, password, first_name, last_name, email } = req.body;
 
     // Data validation
-    if (!username || !password || !first_name || !last_name || !email) {
+    if (!user_id || !username || !password || !first_name || !last_name || !email) {
         return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
 
@@ -54,8 +54,9 @@ const registerUser = async (req, res) => {
 
     // Create the new user object
     const newUser = {
+        user_id,
         username,
-        password: hashedPassword,
+        password,
         first_name,
         last_name,
         email
@@ -103,10 +104,10 @@ const loginUser = async (req, res) => {
 const updateUserById = async (req, res) => {
     //#swagger.tags=['users']
     const userId = new ObjectId(req.params.id);
-    const { username, password, first_name, last_name, email } = req.body;
+    const { user_id, username, password, first_name, last_name, email } = req.body;
 
     // Data validation
-    if (!username || !password || !first_name || !last_name || !email) {
+    if (!user_id || !username || !password || !first_name || !last_name || !email) {
         return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
 
@@ -115,8 +116,9 @@ const updateUserById = async (req, res) => {
 
     // Create the updated user object
     const updatedUser = {
+        user_id,
         username,
-        password: hashedPassword,
+        password,
         first_name,
         last_name,
         email

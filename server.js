@@ -15,6 +15,7 @@ app
         secret: "secret",
         resave: false,
         saveUninitialized: true,
+        cookie: { secure: false }
     }))
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
