@@ -117,16 +117,7 @@
       "tags": ["users"],
       "summary": "Delete logged-in user profile",
       "description": "Deletes the user profile of the currently authenticated user.",
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "parameters": [],
       "responses": {
         "200": {
           "description": "User successfully deleted"
