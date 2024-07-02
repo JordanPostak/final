@@ -94,6 +94,11 @@ const loginUser = async (req, res) => {
 
         // Set user session
         req.session.user = user;
+
+        // Log session information
+        console.log(req.sessionID); // Check session ID
+        console.log(req.session);   // Check session data
+
         res.status(200).json({ message: 'Login successful.', user });
     } catch (error) {
         console.error(error);
