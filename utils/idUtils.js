@@ -1,11 +1,15 @@
 // ...This is the utils/idUtils.js file...
 
+// Function to generate a unique ID
 const generateUniqueUserId = () => {
-    // Generate a unique user ID based on the current time and random values
-    const timestamp = Date.now().toString(36); // Convert current time to base-36
-    const randomValue = Math.random().toString(36).slice(2, 11); // Generate a random base-36 string
-    return `${timestamp}-${randomValue}`;
-};
+    let uniqueId = parseInt(Math.random() * Number.MAX_SAFE_INTEGER);
+    uniqueId = uniqueId
+      .toString(18)
+      .slice(0, 5)
+      .padStart(5, "0")
+      .toLocaleUpperCase();
+    return uniqueId;
+  };
 
 // Example usage
 console.log(generateUniqueUserId());
