@@ -1,10 +1,11 @@
 // ...This is the utils/idUtils.js file...
 
-// Function to generate unique id
-const { v4: uuidv4 } = require('uuid');
-
 const generateUniqueUserId = () => {
-    return uuidv4();
+    // Generate a unique user ID based on the current time and random values
+    const timestamp = Date.now().toString(36); // Convert current time to base-36
+    const randomValue = Math.random().toString(36).slice(2, 11); // Generate a random base-36 string
+    return `${timestamp}-${randomValue}`;
 };
 
-module.exports = { generateUniqueUserId };
+// Example usage
+console.log(generateUniqueUserId());
