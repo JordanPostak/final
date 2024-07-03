@@ -20,21 +20,27 @@ const getAllInspirations = async (req, res) => {
 const getSingleInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     const inspirationId = req.params.id;
+    if (!ObjectId.isValid(inspirationId)) {
+        return res.status(400).json({ error: 'Invalid inspiration ID' });
+    }
 
     try {
-        const inspiration = await mongodb.getDatabase().db('seerstone').collection('inspirations').findOne({ inspirationId });
+        const cursor = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ _id: inspirationId});
 
-        if (!inspiration) {
-            return res.status(404).json({ error: 'Inspiration not found.' });
-        }
-    
-        // Set user session
-        req.session.inspiration = inspiration;
+        cursor.toArray().then((inspirations) => {
+            if (inspirations.length === 0) {
+                return res.status(404).json({ error: 'Inspiration not found' });
+            }
 
-        res.status(200).json({ message: 'viewing inspiration.', inspiration });
+            // Store _id in the session
+            req.session.inspiration = cursor;
+
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(inspirations[0]);
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to view inspiration.' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
