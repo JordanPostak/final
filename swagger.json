@@ -137,10 +137,6 @@
           "schema": {
             "type": "object",
             "properties": {
-              "user_id": {
-                "type": "string",
-                "example": "12345"
-              },
               "username": {
                 "type": "string",
                 "example": "johndoe"
@@ -162,7 +158,7 @@
                 "example": "john.doe@example.com"
               }
             },
-            "required": ["user_id", "username", "password", "first_name", "last_name", "email"]
+            "required": [ "username", "password", "first_name", "last_name", "email"]
           }
         }
       ],

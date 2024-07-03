@@ -3,6 +3,7 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 const { hashPassword, comparePassword } = require('../utils/passwordUtils');
+const { generateUniqueUserId } = require('../utils/idUtils');
 
 const getAllUsers = async (req, res) => {
     //#swagger.tags=['users']
@@ -42,19 +43,22 @@ const getUserById = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-    const { user_id, username, password, first_name, last_name, email } = req.body;
+    const { username, password, first_name, last_name, email } = req.body;
 
     // Data validation
-    if (!user_id || !username || !password || !first_name || !last_name || !email) {
+    if (!username || !password || !first_name || !last_name || !email) {
         return res.status(400).json({ error: "username, password, first_name, last_name, and email are required fields." });
     }
+
+    // Generate a unique user_id
+    const user_id = generateUniqueUserId();
 
     // Hash password
     const hashedPassword = await hashPassword(password);
 
     // Create the new user object
     const newUser = {
-        user_id,
+        user_id: user_id,
         username,
         password: hashedPassword,
         first_name,
