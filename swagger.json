@@ -257,7 +257,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user_id": { "type": "string", "example": "any" },
                 "type": { "type": "string", "example": "any" },
                 "step": { "type": "string", "example": "any" },
                 "parent_id": { "type": "string", "example": "any" },
@@ -291,12 +290,6 @@
         "summary": "Retrieves a single inspiration",
         "description": "This endpoint retrieves a single inspiration based on id.",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
@@ -330,7 +323,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user_id": { "type": "string", "example": "any" },
                 "type": { "type": "string", "example": "any" },
                 "step": { "type": "string", "example": "any" },
                 "parent_id": { "type": "string", "example": "any" },
@@ -393,14 +385,6 @@
         "summary": "Retrieve all inspirations of a particular user",
         "description": "This endpoint retrieves all inspirations based on the id of a particular user. Must be logged in",
         "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -432,12 +416,6 @@
         "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular type. Must be logged in",
         "parameters": [
           {
-            "name": "user_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "type",
             "in": "path",
             "required": true,
@@ -463,12 +441,6 @@
         "summary": "Retrieve all inspirations of a particular user and specific step",
         "description": "This endpoint retrieves all inspirations based on the id of a particular user and of a particular step. Must be logged in",
         "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "step",
             "in": "path",

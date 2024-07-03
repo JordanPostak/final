@@ -43,8 +43,8 @@ const getSingleInspiration = async (req, res) => {
 
   const createInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
+    const userId = req.session.user.user_id;
     const {
-        user_id,
         type,
         step,
         parent_id,
@@ -57,13 +57,13 @@ const getSingleInspiration = async (req, res) => {
     } = req.body;
 
     // Data validation
-    if (!user_id || !type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
-        return res.status(400).json({ error: "user_id, type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
+    if (!type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
+        return res.status(400).json({ error: "type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
     }
 
     // Create the new inspiration object
     const newInspiration = {
-        user_id,
+        user_id: userId,
         type,
         step,
         parent_id,
@@ -93,9 +93,9 @@ const getSingleInspiration = async (req, res) => {
 
 const updateInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
+    const userId = req.session.user.user_id;
     const inspirationId = new ObjectId(req.params.id);
     const {
-        user_id,
         type,
         step,
         parent_id,
@@ -108,12 +108,12 @@ const updateInspiration = async (req, res) => {
     } = req.body;
 
     // Data validation
-    if (!user_id || !type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
+    if (!type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
         return res.status(400).json({ error: "user_id, type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
     }
 
     const updatedInspiration = {
-        user_id,
+        user_id: userId,
         type,
         step,
         parent_id,
@@ -158,9 +158,9 @@ const deleteInspiration = async (req, res) => {
 
 const getInspirationsByUserId = async (req, res) => {
     // #swagger.tags=['inspirations']
-    const { user_id } = req.params; // Access user_id from route parameters
+    const userId = req.session.user.user_id;
     
-    if (!user_id) {
+    if (!userId) {
         return res.status(400).json({ error: 'user_id is required' });
     }
     
@@ -168,7 +168,7 @@ const getInspirationsByUserId = async (req, res) => {
         const inspirations = await mongodb.getDatabase()
             .db('seerstone')
             .collection('inspirations')
-            .find({ user_id: user_id })
+            .find({ user_id: userId })
             .toArray();
 
         if (inspirations.length === 0) {
@@ -184,12 +184,13 @@ const getInspirationsByUserId = async (req, res) => {
 
 const getInspirationsByUserIdAndType = async (req, res) => {
     // #swagger.tags=['inspirations']
-    const { user_id, type } = req.params; // Use req.params to access route parameters
-    if (!user_id || !type) {
-        return res.status(400).json({ error: 'user_id and type are required' });
+    const userId = req.session.user.user_id;
+    const { type } = req.params; // Use req.params to access route parameters
+    if (!type) {
+        return res.status(400).json({ error: 'type is required' });
     }
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id, type }).toArray();
+        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ userId, type }).toArray();
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
@@ -199,12 +200,13 @@ const getInspirationsByUserIdAndType = async (req, res) => {
 
 const getInspirationsByUserIdAndStep = async (req, res) => {
     // #swagger.tags=['inspirations']
-    const { user_id, step } = req.params; // Use req.params to access route parameters
-    if (!user_id || !step) {
-        return res.status(400).json({ error: 'user_id and step are required' });
+    const userId = req.session.user.user_id;
+    const { step } = req.params; // Use req.params to access route parameters
+    if (!step) {
+        return res.status(400).json({ error: 'step is required' });
     }
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ user_id, step }).toArray();
+        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ userId, step }).toArray();
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
