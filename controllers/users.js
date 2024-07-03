@@ -95,12 +95,7 @@ const loginUser = async (req, res) => {
         if (!isPasswordMatch) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
-
-
-        // Log session information
-        console.log(req.session.user); // Check session user
     
-
         // Set user session
         req.session.user = user;
 
