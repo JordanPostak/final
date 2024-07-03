@@ -30,12 +30,12 @@ app.get('/', (req, res) => {
     if (req.session.user !== undefined) {
         const userid = req.session.user.user_id;
         const displayName = req.session.user.username;
-        const inspirationId = req.session.inspiration.id;
+        const inspiration = req.session.inspiration;
 
         res.send(`
             <h1>Logged in as ${displayName}</h1>
             <h2>User id: ${userid}</h2>
-            ${inspirationId ? `<h3>Currently viewing inspiration ID: ${inspirationId}</h3>` : '<h3>Not viewing any inspiration</h3>'}
+            ${inspiration && inspiration._id ? `<h3>Currently viewing inspiration ID: ${inspiration._id}</h3>` : '<h3>Not viewing any inspiration</h3>'}
             <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger</a></h2>
         `);
     } else {
