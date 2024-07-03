@@ -28,10 +28,13 @@ const getSingleInspiration = async (req, res) => {
         const cursor = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ _id: new ObjectId(inspirationId) });
 
         cursor.toArray().then((inspirations) => {
-
             if (inspirations.length === 0) {
                 return res.status(404).json({ error: 'Inspiration not found' });
             }
+
+            // Store _id in the session
+            req.session.inspirationId = inspirationId;
+
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(inspirations[0]);
         });
@@ -94,7 +97,7 @@ const getSingleInspiration = async (req, res) => {
 const updateInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     const userId = req.session.user.user_id;
-    const inspirationId = new ObjectId(req.params.id);
+    const inspirationId = req.session.inspirationId;
     const {
         type,
         step,
@@ -143,7 +146,7 @@ const updateInspiration = async (req, res) => {
 const deleteInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     try {
-        const inspirationId = new ObjectId(req.params.id);
+        const inspirationId = req.session.inspirationId;
         const response = await mongodb.getDatabase().db('seerstone').collection('inspirations').deleteOne({ _id: inspirationId });
         if (response.deletedCount > 0) {
             res.status(200).json({ message: 'Inspiration successfully deleted'});
