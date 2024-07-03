@@ -11,5 +11,6 @@ const generateUniqueUserId = () => {
     return uniqueId;
   };
 
-// Example usage
-console.log(generateUniqueUserId());
+  module.exports = {
+    generateUniqueUserId
+};
