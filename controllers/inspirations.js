@@ -97,7 +97,7 @@ const getSingleInspiration = async (req, res) => {
 const updateInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     const userId = req.session.user.user_id;
-    const inspirationId = req.session.inspirationId;
+    const inspirationId = req.session.inspiration._id;
     const {
         type,
         step,
@@ -146,7 +146,7 @@ const updateInspiration = async (req, res) => {
 const deleteInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     try {
-        const inspirationId = req.session.inspirationId;
+        const inspirationId = req.session.inspiration._id;
         const response = await mongodb.getDatabase().db('seerstone').collection('inspirations').deleteOne({ _id: inspirationId });
         if (response.deletedCount > 0) {
             res.status(200).json({ message: 'Inspiration successfully deleted'});
@@ -188,12 +188,25 @@ const getInspirationsByUserId = async (req, res) => {
 const getInspirationsByUserIdAndType = async (req, res) => {
     // #swagger.tags=['inspirations']
     const userId = req.session.user.user_id;
-    const { type } = req.params; // Use req.params to access route parameters
+    const { type } = req.params;
+
     if (!type) {
         return res.status(400).json({ error: 'type is required' });
     }
+
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ userId, type }).toArray();
+        const allInspirations = await mongodb.getDatabase()
+            .db('seerstone')
+            .collection('inspirations')
+            .find({ user_id: userId })
+            .toArray();
+
+        const inspirations = allInspirations.filter(inspiration => inspiration.type === type);
+
+        if (inspirations.length === 0) {
+            return res.status(404).json({ error: 'No inspirations found for the provided type' });
+        }
+
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
@@ -204,12 +217,25 @@ const getInspirationsByUserIdAndType = async (req, res) => {
 const getInspirationsByUserIdAndStep = async (req, res) => {
     // #swagger.tags=['inspirations']
     const userId = req.session.user.user_id;
-    const { step } = req.params; // Use req.params to access route parameters
+    const { step } = req.params;
+
     if (!step) {
         return res.status(400).json({ error: 'step is required' });
     }
+
     try {
-        const inspirations = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ userId, step }).toArray();
+        const allInspirations = await mongodb.getDatabase()
+            .db('seerstone')
+            .collection('inspirations')
+            .find({ user_id: userId })
+            .toArray();
+
+        const inspirations = allInspirations.filter(inspiration => inspiration.step === step);
+
+        if (inspirations.length === 0) {
+            return res.status(404).json({ error: 'No inspirations found for the provided step' });
+        }
+
         res.status(200).json(inspirations);
     } catch (error) {
         console.error(error);
