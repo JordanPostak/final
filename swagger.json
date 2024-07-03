@@ -221,6 +221,21 @@
       }
     }
   },
+    "/users/logout": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Logout the current user",
+        "description": "Logs out the current authenticated user by destroying the session.",
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          },
+          "500": {
+            "description": "Failed to logout"
+          }
+        }
+      }
+    },
     "/inspirations/": {
       "get": {
         "tags": ["inspirations"],

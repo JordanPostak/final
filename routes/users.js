@@ -24,4 +24,7 @@ router.put('/:id', isAuthenticated, usersController.updateUserById);
 // Delete user profile by user ID
 router.delete('/:id', isAuthenticated, usersController.deleteUserById);
 
+// Logout user
+router.post('/logout', usersController.logoutUser);
+
 module.exports = router;

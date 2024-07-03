@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
     } else {
         res.send(`
         <h1>Logged Out</h1>
+        <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger and register or login</a></h2>
     `);
     }
 });
