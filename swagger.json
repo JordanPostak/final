@@ -288,8 +288,14 @@
       "get": {
         "tags": ["inspirations"],
         "summary": "View a single inspiration",
-        "description": "This endpoint retrieves a single inspiration based on id.",
+        "description": "This endpoint views a single inspiration based on id and sets in in session cookies.",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
