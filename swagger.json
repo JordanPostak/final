@@ -318,12 +318,6 @@
         "description": "This endpoint updates a single inspiration based on id. Must be logged in",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "body",
             "in": "body",
             "schema": {
