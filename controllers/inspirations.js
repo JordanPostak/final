@@ -33,7 +33,7 @@ const getSingleInspiration = async (req, res) => {
             }
 
             // Store _id in the session
-            req.session.inspirationId = inspirationId;
+            req.session.inspiration = cursor;
 
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(inspirations[0]);

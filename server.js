@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
     if (req.session.user !== undefined) {
         const userid = req.session.user.user_id;
         const displayName = req.session.user.username;
-        const inspirationId = req.session.inspirationId;
+        const inspirationId = req.session.inspiration;
 
         res.send(`
             <h1>Logged in as ${displayName}</h1>
