@@ -122,6 +122,7 @@ const updateUserById = async (req, res) => {
 
     // Create the updated user object
     const updatedUser = {
+        user_id: userId,
         username,
         password: hashedPassword,
         first_name,
