@@ -62,12 +62,6 @@
       "description": "This endpoint updates a user profile based on the user id.",
       "parameters": [
         {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
           "name": "body",
           "in": "body",
           "schema": {
