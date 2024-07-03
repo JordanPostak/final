@@ -25,7 +25,7 @@ const getSingleInspiration = async (req, res) => {
     }
 
     try {
-        const cursor = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ _id: inspirationId});
+        const cursor = await mongodb.getDatabase().db('seerstone').collection('inspirations').find({ _id: new ObjectId(inspirationId) });
 
         cursor.toArray().then((inspirations) => {
             if (inspirations.length === 0) {
@@ -33,7 +33,7 @@ const getSingleInspiration = async (req, res) => {
             }
 
             // Store _id in the session
-            req.session.inspiration = cursor;
+            req.session.inspirationId = inspirationId;
 
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(inspirations[0]);
