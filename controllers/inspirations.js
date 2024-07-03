@@ -32,8 +32,8 @@ const getSingleInspiration = async (req, res) => {
                 return res.status(404).json({ error: 'Inspiration not found' });
             }
 
-            // Store _id in the session
-            req.session.inspiration = cursor;
+            // Store the entire inspiration document in the session
+            req.session.inspiration = inspirations[0];
 
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(inspirations[0]);

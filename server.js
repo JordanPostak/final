@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
         res.send(`
             <h1>Logged in as ${displayName}</h1>
             <h2>User id: ${userid}</h2>
-            ${inspiration ? `<h3>Currently viewing inspiration ID: ${inspiration}</h3>` : '<h3>Not viewing any inspiration</h3>'}
+            ${inspiration ? `<h3>Currently viewing inspiration ID: ${inspiration._id}</h3>` : '<h3>Not viewing any inspiration</h3>'}
             <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger</a></h2>
         `);
     } else {
