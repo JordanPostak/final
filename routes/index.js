@@ -9,6 +9,7 @@ router.use('/users', require('./users'));
 router.use('/inspirations', require('./inspirations'));
 router.use('/journals', require('./journals'));
 router.use('/plans', require('./plans'));
+router.use('/quotes', require('./quotes'));
 
 // Conditionally handle login based on environment
 if (process.env.NODE_ENV !== 'test') {

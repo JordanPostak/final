@@ -9,6 +9,7 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
 app
     .use(bodyParser.json())
     .use(session({
@@ -29,26 +30,29 @@ app
     }))
     .use("/", require("./routes/index.js"));
 
+
+// Routes
 app.get('/', (req, res) => {
-    if (req.session.user !== undefined) {
-        const userid = req.session.user.user_id;
-        const displayName = req.session.user.username;
-        const inspiration = req.session.inspiration;
-
-        res.send(`
-            <h1>Logged in as ${displayName}</h1>
-            <h2>User id: ${userid}</h2>
-            ${inspiration ? `<h3>Currently viewing inspiration ID: ${inspiration._id}</h3>` : '<h3>Not viewing any inspiration</h3>'}
-            <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger</a></h2>
-        `);
+    if (req.session.user) {
+      const { user_id, username } = req.session.user;
+      const inspiration = req.session.inspiration;
+  
+      res.send(`
+        <h1>Logged in as ${username}</h1>
+        <h2>User id: ${user_id}</h2>
+        ${inspiration ? `<h3>Currently viewing inspiration ID: ${inspiration._id}</h3>` : '<h3>Not viewing any inspiration</h3>'}
+        <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger</a></h2>
+      `);
     } else {
-        res.send(`
-            <h1>Logged Out</h1>
-            <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger and register or login</a></h2>
-        `);
+      res.send(`
+        <h1>Logged Out</h1>
+        <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger and register or login</a></h2>
+      `);
     }
-});
+  });
 
+
+// Initialize MongoDB connection
 mongodb.initDb((err) => {
     if (err) {
         console.log(err);
