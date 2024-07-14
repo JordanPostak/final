@@ -232,6 +232,21 @@
         }
       }
     },
+    "/quotes/": {
+      "get": {
+        "tags": ["quotes"],
+        "summary": "Retrieve all quotes",
+        "description": "This endpoint retrieves all quotes.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/inspirations/": {
       "get": {
         "tags": ["inspirations"],
