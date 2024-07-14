@@ -227,11 +227,11 @@
             "description": "Logout successful"
           },
           "500": {
-            "description": "Failed to logout"
-          }
+          "description": "Failed to logout"
         }
       }
-    },
+    }
+  },
     "/quotes/": {
       "get": {
         "tags": ["quotes"],
