@@ -16,11 +16,6 @@ app
         secret: "secret",
         resave: false,
         saveUninitialized: true,
-        cookie: {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production', // Use true if serving over HTTPS
-          sameSite: 'None' // Allow cross-site cookies
-      }
     }))
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
