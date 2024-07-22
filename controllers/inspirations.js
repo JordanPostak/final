@@ -48,6 +48,7 @@ const getSingleInspiration = async (req, res) => {
     // #swagger.tags=['inspirations']
     const userId = req.session.user.user_id;
     const {
+        name,
         type,
         step,
         parent_id,
@@ -60,13 +61,14 @@ const getSingleInspiration = async (req, res) => {
     } = req.body;
 
     // Data validation
-    if (!type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
-        return res.status(400).json({ error: "type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
+    if (!name || !type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
+        return res.status(400).json({ error: "name, type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
     }
 
     // Create the new inspiration object
     const newInspiration = {
         user_id: userId,
+        name,
         type,
         step,
         parent_id,
@@ -99,6 +101,7 @@ const updateInspiration = async (req, res) => {
     const userId = req.session.user.user_id;
     const inspirationId = req.session.inspiration._id;
     const {
+        name,
         type,
         step,
         parent_id,
@@ -111,12 +114,13 @@ const updateInspiration = async (req, res) => {
     } = req.body;
 
     // Data validation
-    if (!type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
-        return res.status(400).json({ error: "user_id, type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
+    if (!name || !type || !step|| !parent_id|| !child_id|| !evidence|| !acted_on|| !planned|| !reviewed|| !recorded) {
+        return res.status(400).json({ error: "name, type, step, parent_id, child_id, evidence, acted_on, planned, reviewed and recorded are required fields." });
     }
 
     const updatedInspiration = {
         user_id: userId,
+        name,
         type,
         step,
         parent_id,
