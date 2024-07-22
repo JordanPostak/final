@@ -24,7 +24,7 @@ app
         next();
     })
     .use(cors({
-        origin: ['http://localhost:5173', 'http://seerstoneapi.onrender.com', 'https://seerstoneapi.onrender.com'],
+        origin: ['http://localhost:5173', 'http://seerstoneapi.onrender.com', 'https://seerstoneapi.onrender.com', 'https://jordanpostak.github.io/inspire-stone/'],
         methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
         credentials: true
     }))
