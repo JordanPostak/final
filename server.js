@@ -18,7 +18,7 @@ app
         saveUninitialized: true,
     }))
     .use((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173', 'https://jordanpostak.github.io/inspire-stone/');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization');
         res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, PATCH, OPTIONS, DELETE');
         next();
