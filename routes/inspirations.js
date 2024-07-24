@@ -5,7 +5,7 @@ const router = express.Router();
 const inspirationsController = require('../controllers/inspirations');
 const { isAuthenticated } = require('../middleware/authenticate');
 
-router.get('/',  inspirationsController.getAllInspirations);
+router.get('/',  isAuthenticated, inspirationsController.getAllInspirations);
 router.post('/',isAuthenticated,  inspirationsController.createInspiration);
 router.get('/:id',isAuthenticated,  inspirationsController.getSingleInspiration);
 router.put('/:id',isAuthenticated,  inspirationsController.updateInspiration);
