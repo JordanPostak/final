@@ -27,7 +27,6 @@ app
       ],
       methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
       credentials: true,
-      allowedHeaders: 'Content-Type,Authorization'
   }))
 
   .use("/", require("./routes/index.js"));
