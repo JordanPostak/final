@@ -16,29 +16,26 @@ app
         secret: "secret",
         resave: false,
         saveUninitialized: true,
-        cookie: { 
-            secure: process.env.NODE_ENV === 'production', // secure should be true in production
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // none in production, lax in development
-        }
     }))
     .use(cors({
-        origin: [
-            'http://localhost:5173',          // Local development
-            'http://seerstoneapi.onrender.com', // Your backend URL
-            'https://seerstoneapi.onrender.com', // Your backend URL
-            'https://jordanpostak.github.io' // GitHub Pages URL
-        ],
-        methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-        credentials: true, // Allow credentials
-    }))
+      origin: [
+          'http://localhost:5173',          // Local development
+          'http://seerstoneapi.onrender.com', // Your backend URL
+          'https://seerstoneapi.onrender.com', // Your backend URL
+          'https://jordanpostak.github.io' // GitHub Pages URL
+      ],
+      methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+      credentials: true,
+  }))
     .use("/", require("./routes/index.js"));
+
 
 // Routes
 app.get('/', (req, res) => {
     if (req.session.user) {
       const { user_id, username } = req.session.user;
       const inspiration = req.session.inspiration;
-
+  
       res.send(`
         <h1>Logged in as ${username}</h1>
         <h2>User id: ${user_id}</h2>
@@ -51,7 +48,8 @@ app.get('/', (req, res) => {
         <h2><a href="https://seerstoneapi.onrender.com/api-docs">Click here to go to Swagger and register or login</a></h2>
       `);
     }
-});
+  });
+
 
 // Initialize MongoDB connection
 mongodb.initDb((err) => {
