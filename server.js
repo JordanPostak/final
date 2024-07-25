@@ -5,14 +5,18 @@ const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const session = require('express-session');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cookieParser());
 
 // Middleware for setting CORS headers dynamically
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', req.headers.origin);
     res.set('Access-Control-Allow-Credentials', 'true');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Set-Cookie');
     next();
 });
 
@@ -37,8 +41,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-      sameSite: 'None',
-  }
+        secure: process.env.NODE_ENV === 'production', // Set to true in production
+        sameSite: 'None'
+    }
 }));
 
 // Routes
