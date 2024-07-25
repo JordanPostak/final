@@ -17,17 +17,7 @@ app.use((req, res, next) => {
 });
 
 // CORS setup using the `cors` package
-app.use(cors({
-    origin: [
-        'http://localhost:5173',          // Local development
-        'http://seerstoneapi.onrender.com', // Your backend URL
-        'https://seerstoneapi.onrender.com', // Your backend URL
-        'https://jordanpostak.github.io',             // GitHub Pages root URL
-        'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-    ],
-    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true
-}));
+app.use(cors());
 
 // Other middleware
 app.use(bodyParser.json());
