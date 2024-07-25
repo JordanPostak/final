@@ -17,10 +17,6 @@ app
         secret: "secret",
         resave: false,
         saveUninitialized: true,
-        cookie: {
-          secure: process.env.NODE_ENV === 'production', // secure should be true in production
-          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none in production, lax in development
-      }
     }))
     .use(cors({
       origin: [
