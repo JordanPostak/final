@@ -26,7 +26,8 @@ app
           'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
       ],
       methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-      support_credentials: true
+      credentials: true,
+      exposedHeaders: ['Set-Cookie']
   }))
     .use("/", require("./routes/index.js"));
 
