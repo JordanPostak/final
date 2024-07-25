@@ -22,7 +22,7 @@ app
           'http://localhost:5173',          // Local development
           'http://seerstoneapi.onrender.com', // Your backend URL
           'https://seerstoneapi.onrender.com', // Your backend URL
-          'https://jordanpostak.github.io' // GitHub Pages URL
+          'https://jordanpostak.github.io/inspire-stone' // GitHub Pages URL
       ],
       methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
       credentials: true,
