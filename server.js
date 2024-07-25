@@ -33,19 +33,44 @@ app.use(cors({
 // Other middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Set dynamic cookie options based on environment and request
+const setCookieOptions = (req, res, next) => {
+    if (process.env.NODE_ENV === 'production') {
+        req.session.cookie.sameSite = 'None';
+        req.session.cookie.secure = true;
+    } else {
+        req.session.cookie.sameSite = 'Lax';
+        req.session.cookie.secure = false;
+    }
+    next();
+};
+
+app.use(setCookieOptions);
+
+// Session middleware
 app.use(session({
     secret: "secret",
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-      sameSite: 'None',
-     secure: process.env.NODE_ENV === 'production'
-  }
+    saveUninitialized: true
 }));
 
 // Routes
+const { isAuthenticated } = require('./middleware/authenticate');
+
 app.use("/", require("./routes/index.js"));
 
+app.get('/inspirations', isAuthenticated, async (req, res) => {
+    try {
+        // Fetch inspirations from your database
+        const inspirations = await getInspirationsFromDB();
+        res.json(inspirations);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching inspirations' });
+    }
+});
+
+// Example route for testing session
 app.get('/', (req, res) => {
     if (req.session.user) {
         const { user_id, username } = req.session.user;
