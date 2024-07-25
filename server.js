@@ -5,12 +5,9 @@ const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const session = require('express-session');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-app.use(cookieParser());
 
 // Middleware for setting CORS headers dynamically
 app.use((req, res, next) => {
@@ -41,9 +38,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Set to true in production
-        sameSite: 'None'
-    }
+      sameSite: 'None',
+      secure: true
+  }
 }));
 
 // Routes
