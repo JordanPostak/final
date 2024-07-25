@@ -31,14 +31,14 @@ app.use(cors({
     secure: 'true'
 }));
 
-// // Other middleware
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(session({
-//     secret: "secret",
-//     resave: false,
-//     saveUninitialized: true,
-// }));
+// Other middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // Routes
 app.use("/", require("./routes/index.js"));
