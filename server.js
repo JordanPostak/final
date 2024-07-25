@@ -9,12 +9,12 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware for setting CORS headers dynamically
-app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-    res.set('Access-Control-Allow-Credentials', 'true');
-    next();
-});
+// // Middleware for setting CORS headers dynamically
+// app.use((req, res, next) => {
+//     res.set('Access-Control-Allow-Origin', req.headers.origin);
+//     res.set('Access-Control-Allow-Credentials', 'true');
+//     next();
+// });
 
 // CORS setup using the `cors` package
 app.use(cors({
@@ -31,14 +31,14 @@ app.use(cors({
     secure: 'true'
 }));
 
-// Other middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-}));
+// // Other middleware
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 
 // Routes
 app.use("/", require("./routes/index.js"));
