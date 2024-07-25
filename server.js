@@ -2,38 +2,58 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const session = require('express-session');
-// const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// List of allowed origins
+const allowedOrigins = [
+    'http://localhost:5173', // Local development
+    'http://seerstoneapi.onrender.com', // Your backend URL
+    'https://seerstoneapi.onrender.com', // Your backend URL
+    'https://jordanpostak.github.io', // GitHub Pages root URL
+    'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
+];
+
 // Middleware for setting CORS headers dynamically
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-    res.set('Access-Control-Allow-Credentials', 'true');
+    const origin = req.headers.origin;
+    
+    // Check if the origin is allowed
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+    } else {
+        res.setHeader('Access-Control-Allow-Origin', ''); // No access for unauthorized origins
+    }
+
+    // Allow specific methods
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    // Allow specific headers
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end();
+    }
+
     next();
 });
-
-// // CORS setup using the `cors` package
-// app.use(cors({
-//     origin: [
-//         'http://localhost:5173',          // Local development
-//         'http://seerstoneapi.onrender.com', // Your backend URL
-//         'https://seerstoneapi.onrender.com', // Your backend URL
-//         'https://jordanpostak.github.io',             // GitHub Pages root URL
-//         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-//     ],
-//     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-//     credentials: true
-// }));
 
 // Other middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Session setup with SameSite attribute
 app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        sameSite: 'None', // Allow cross-site cookies
+        httpOnly: true // Prevent access to cookie via JavaScript
+    }
 }));
 
 // Routes
