@@ -1,3 +1,5 @@
+//This is the server.js file...
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
@@ -34,6 +36,9 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      sameSite: 'None',
+  }
 }));
 
 // Routes
