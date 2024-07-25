@@ -38,6 +38,8 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
+    sameSite: 'None',
+    secure: 'true'
 }));
 
 // Routes
