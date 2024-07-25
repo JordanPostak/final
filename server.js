@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app
+    .use(bodyParser.json())
     .use(session({
       secret: "secret",
       resave: false,
@@ -18,7 +19,7 @@ app
       cookie: { 
           secure: process.env.NODE_ENV === 'production', // secure should be true in production
           sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none in production, lax in development
-          httpOnly: true // ensure this is true to protect the cookie from being accessed by JavaScript
+          httpOnly: false // ensure this is true to protect the cookie from being accessed by JavaScript
       }
     }))
     .use(cors({
