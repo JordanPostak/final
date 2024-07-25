@@ -11,7 +11,6 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app
-    .use(bodyParser.json())
     .use(session({
       secret: "secret",
       resave: false,
