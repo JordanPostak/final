@@ -4,7 +4,7 @@
     "description": "My final project",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js", 
+        "start": "node server.js",
         "test": "jest --detectOpenHandles",
         "swagger": "node swagger.js"
     },
