@@ -9,12 +9,12 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// // Middleware for setting CORS headers dynamically
-// app.use((req, res, next) => {
-//     res.set('Access-Control-Allow-Origin', req.headers.origin);
-//     res.set('Access-Control-Allow-Credentials', 'true');
-//     next();
-// });
+// Middleware for setting CORS headers dynamically
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', req.headers.origin);
+    res.set('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 // CORS setup using the `cors` package
 app.use(cors({
@@ -26,20 +26,22 @@ app.use(cors({
         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true,
-    sameSite: 'None',
-    secure: 'true'
+    credentials: true
 }));
 
 // Other middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Session middleware
 app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-    sameSite: 'None',
-    secure: 'true'
+  secret: "secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      sameSite: 'None',
+      secure: process.env.NODE_ENV === 'production' // true for production, false for development
+  }
 }));
 
 // Routes
