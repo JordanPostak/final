@@ -27,22 +27,6 @@ app.use(cors({
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  maxAge: 600
-}));
-
-// Middleware to handle preflight requests
-app.options('*', cors({
-  origin: [
-      'http://localhost:5173',          // Local development
-      'http://seerstoneapi.onrender.com', // Your backend URL
-      'https://seerstoneapi.onrender.com', // Your backend URL
-      'https://jordanpostak.github.io',             // GitHub Pages root URL
-      'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-  ],
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 600
 }));
 
