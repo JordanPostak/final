@@ -16,7 +16,7 @@ router.get('/:id', usersController.getUserById);
 router.post('/register', usersController.registerUser);
 
 // Login user
-router.post('/login', sessionMiddleware, usersController.loginUser);
+router.post('/login', usersController.loginUser);
 
 // Update user profile information by user ID
 router.put('/:id', isAuthenticated, usersController.updateUserById);
