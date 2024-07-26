@@ -46,9 +46,8 @@ app.use(session({
 // Middleware to set cookie options specifically for /inspirations
 app.use('/inspirations', (req, res, next) => {
   res.cookie('sessionId', req.sessionID, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // true for HTTPS
-    sameSite: 'None' // Required for cross-site cookies
+    sameSite: 'None',
+    secure: true
   });
   next();
 });
