@@ -25,6 +25,7 @@ const corsOptions = {
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 600
 };
 
@@ -35,10 +36,6 @@ app.use(session({
   secret: "secret",
   resave: false,
   saveUninitialized: true,
-  cookie: { 
-    sameSite: 'None', 
-    secure: true
-  }
 }));
 
 // Routes
