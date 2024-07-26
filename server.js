@@ -41,16 +41,6 @@ app.use(session({
 }));
 
 // Routes
-
-// Middleware to set cookie options specifically for /inspirations
-app.use('/inspirations', (req, res, next) => {
-  res.cookie('sessionId', req.sessionID, {
-    sameSite: 'None',
-    secure: true
-  });
-  next();
-});
-
 app.use("/", require("./routes/index.js"));
 
 app.get('/', (req, res) => {
