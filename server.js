@@ -38,10 +38,7 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      sameSite: 'None',
-      secure: process.env.NODE_ENV === 'production' // Secure cookies in production
-  }
+    
 }));
 
 // Routes
