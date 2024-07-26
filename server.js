@@ -26,7 +26,9 @@ app.use(cors({
         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    maxAge: 600
 }));
 
 // Other middleware
