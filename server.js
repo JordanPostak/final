@@ -12,7 +12,10 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json({ limit: "25mb" }));
 app.use(cors());
 
+// Middleware for setting CORS headers dynamically
 app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin);
+  res.set('Access-Control-Allow-Credentials', 'true');
   res.setHeader("Access-Control-Allow-Origin", 
     'http://localhost:5173',          // Local development
     'http://seerstoneapi.onrender.com', // Your backend URL
