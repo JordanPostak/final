@@ -3,7 +3,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
-const session = require('express-session');
 const cors = require('cors');
 
 const app = express();

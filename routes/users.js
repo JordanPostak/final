@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users');
-const { isAuthenticated } = require('../middleware/authenticate');
+const { isAuthenticated, sessionMiddleware } = require('../middleware/authenticate');
 
 // Retrieve all user profiles
 router.get('/', usersController.getAllUsers);
@@ -16,7 +16,7 @@ router.get('/:id', usersController.getUserById);
 router.post('/register', usersController.registerUser);
 
 // Login user
-router.post('/login', usersController.loginUser);
+router.post('/login', sessionMiddleware, usersController.loginUser);
 
 // Update user profile information by user ID
 router.put('/:id', isAuthenticated, usersController.updateUserById);
