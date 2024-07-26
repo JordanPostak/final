@@ -9,8 +9,6 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json({ limit: "25mb" }));
-
 app.use(cors({
   origin: [
     'http://localhost:5173',          // Local development
@@ -24,12 +22,14 @@ app.use(cors({
   maxAge: 600
 }));
 
+app.use(bodyParser.json({ limit: "25mb" }));
+
 // Session middleware
-app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-}));
+// app.use(session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 
 // Routes
 app.use("/", require("./routes/index.js"));
