@@ -1,4 +1,4 @@
-//This is the server.js file...
+//This is the server.js
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -26,18 +26,16 @@ app.use(cors({
         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true,
+    credentials: true
 }));
 
 // Other middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Session middleware
 app.use(session({
-  secret: "secret",
-  resave: false,
-  saveUninitialized: true,
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
 }));
 
 // Routes
