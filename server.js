@@ -9,13 +9,6 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware for setting CORS headers dynamically
-app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-    res.set('Access-Control-Allow-Credentials', 'true');
-    next();
-});
-
 // CORS setup using the `cors` package
 app.use(cors({
     origin: [
