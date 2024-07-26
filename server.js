@@ -19,7 +19,10 @@ app.use(cors({
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   credentials: true,
-  maxAge: 600
+  maxAge: 600,
+  secret: "secret",
+  resave: false,
+  saveUninitialized: true,
 }));
 
 app.use(bodyParser.json({ limit: "25mb" }));
