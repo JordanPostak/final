@@ -28,11 +28,11 @@ app.use(cors({
 app.use(bodyParser.json({ limit: "25mb" }));
 
 // Session middleware
-// app.use(session({
-//     secret: "secret",
-//     resave: false,
-//     saveUninitialized: true,
-// }));
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // Routes
 app.use("/", require("./routes/index.js"));
