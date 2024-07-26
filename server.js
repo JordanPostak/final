@@ -27,7 +27,6 @@ app.use(cors({
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
 
 // Other middleware
