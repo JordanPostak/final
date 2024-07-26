@@ -14,6 +14,4 @@ const corsMiddleware = cors({
   maxAge: 600
 });
 
-module.exports = {
-    corsMiddleware
-}
+module.exports = corsMiddleware;
