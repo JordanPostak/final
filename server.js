@@ -26,10 +26,14 @@ const corsOptions = {
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['*'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
   maxAge: 600
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Session middleware
 app.use(session({
