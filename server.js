@@ -12,19 +12,18 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json({ limit: "25mb" }));
 app.use(cors());
 
-// Middleware for setting CORS headers dynamically
-app.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', req.headers.origin);
-  res.set('Access-Control-Allow-Credentials', 'true');
-  res.setHeader("Access-Control-Allow-Origin", 
+app.use(cors({
+  origin: [
     'http://localhost:5173',          // Local development
     'http://seerstoneapi.onrender.com', // Your backend URL
     'https://seerstoneapi.onrender.com', // Your backend URL
     'https://jordanpostak.github.io',             // GitHub Pages root URL
     'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-  );
-  next();
-});
+  ],
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  credentials: true,
+  maxAge: 600
+}));
 
 // Session middleware
 app.use(session({
