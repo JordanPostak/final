@@ -26,7 +26,8 @@ app.use(cors({
         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
 
 // Other middleware
@@ -41,6 +42,17 @@ app.use(session({
 }));
 
 // Routes
+
+// Middleware to set cookie options specifically for /inspirations
+app.use('/inspirations', (req, res, next) => {
+  res.cookie('sessionId', req.sessionID, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // true for HTTPS
+    sameSite: 'None' // Required for cross-site cookies
+  });
+  next();
+});
+
 app.use("/", require("./routes/index.js"));
 
 app.get('/', (req, res) => {
