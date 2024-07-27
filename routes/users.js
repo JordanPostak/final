@@ -5,19 +5,19 @@ const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users');
 const { isAuthenticated } = require('../middleware/authenticate');
-const { corsMiddleware } = require('../middleware/corsMiddleware.js');
+const { loginCors, simpleCors } = require('../middleware/corsMiddleware');
 
 // Retrieve all user profiles
-router.get('/', usersController.getAllUsers);
+router.get('/', simpleCors, usersController.getAllUsers);
 
 // Retrieve user profile information by ID
-router.get('/:id', usersController.getUserById);
+router.get('/:id', simpleCors, usersController.getUserById);
 
 // Create a new user profile
-router.post('/register', usersController.registerUser);
+router.post('/register', simpleCors, usersController.registerUser);
 
 // Login user
-router.post('/login', usersController.loginUser);
+router.post('/login', loginCors, usersController.loginUser);
 
 // Update user profile information by user ID
 router.put('/:id', isAuthenticated, usersController.updateUserById);
@@ -26,6 +26,6 @@ router.put('/:id', isAuthenticated, usersController.updateUserById);
 router.delete('/:id', isAuthenticated, usersController.deleteUserById);
 
 // Logout user
-router.post('/logout', usersController.logoutUser);
+router.post('/logout', simpleCors, usersController.logoutUser);
 
 module.exports = router;

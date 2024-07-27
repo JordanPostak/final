@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors());
+// app.use(cors());
 // CORS setup using the `cors` package
 app.use(cors({
     origin: [
@@ -27,6 +27,7 @@ app.use(cors({
         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    credentials: true
 }));
 
 // Other middleware

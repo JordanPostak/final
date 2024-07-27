@@ -1,18 +1,43 @@
 // middleware/corsMiddleware.js
-const cors = require('cors');
+const loginCors = (req, res, next) => {
+  const allowedOrigins = [
+      'http://localhost:5173',
+      'http://seerstoneapi.onrender.com',
+      'https://seerstoneapi.onrender.com',
+      'https://jordanpostak.github.io',
+      'https://jordanpostak.github.io/inspire-stone'
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, UPDATE, PUT, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+};
 
-const corsMiddleware = cors({
-  origin: [
-    'http://localhost:5173',          // Local development
-    'http://seerstoneapi.onrender.com', // Your backend URL
-    'https://seerstoneapi.onrender.com', // Your backend URL
-    'https://jordanpostak.github.io',             // GitHub Pages root URL
-    'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-  ],
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  credentials: true
-});
+
+const simpleCors = (req, res, next) => {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://seerstoneapi.onrender.com',
+    'https://seerstoneapi.onrender.com',
+    'https://jordanpostak.github.io',
+    'https://jordanpostak.github.io/inspire-stone'
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, UPDATE, PUT, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+};
 
 module.exports = {
-  corsMiddleware
-}
+  loginCors,
+  simpleCors
+};

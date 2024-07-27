@@ -4,8 +4,9 @@ const express = require('express');
 const router = express.Router();
 const journalsController = require('../controllers/journals');
 const { isAuthenticated } = require('../middleware/authenticate');
+const { loginCors, simpleCors } = require('../middleware/corsMiddleware');
 
-router.get('/', journalsController.getAllJournalEntries);
+router.get('/', simpleCors, journalsController.getAllJournalEntries);
 router.post('/', isAuthenticated, journalsController.createJournalEntry);
 router.get('/:id', isAuthenticated, journalsController.getJournalEntryById);
 router.put('/:id', isAuthenticated, journalsController.updateJournalEntryById);
