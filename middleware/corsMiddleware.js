@@ -12,14 +12,14 @@ const allowedOrigins = [
 
 // Configuration for routes that require credentials
 const loginCors = cors({
-  origin: [allowedOrigins],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   credentials: true
 });
 
 // Configuration for routes that don't require credentials
 const simpleCors = cors({
-  origin: [allowedOrigins],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
 });
 
