@@ -9,6 +9,13 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware for setting CORS headers dynamically
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', req.headers.origin);
+    res.set('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 app.use(cors());
 // CORS setup using the `cors` package
 app.use(cors({
@@ -37,17 +44,6 @@ app.use(session({
 
 // Routes
 app.use("/", require("./routes/index.js"));
-
-// Custom middleware to handle CORS headers dynamically
-app.use((req, res, next) => {
-  if (req.path === '/users/login') {
-      // Apply specific CORS headers only for login route
-      res.set('Access-Control-Allow-Origin', req.headers.origin);
-      res.set('Access-Control-Allow-Credentials', 'true');
-  }
-  next();
-});
-
 
 // Initialize MongoDB connection
 mongodb.initDb((err) => {
