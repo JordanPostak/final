@@ -39,10 +39,8 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      secure: true, // Ensure HTTPS is used
-      sameSite: 'None' // Required for cross-site cookies
-  }
+    secure: true, // Ensure HTTPS is used
+    sameSite: 'None' // Required for cross-site cookies
 }));
 
 // Routes
