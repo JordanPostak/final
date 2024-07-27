@@ -29,7 +29,7 @@ const loginCookie = (req, res, next) => {
 const loginCors = cors({
   origin: allowedOrigins,
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  credentials: true
+  credentials: true,
 });
 
 // Configuration for routes that don't require credentials
