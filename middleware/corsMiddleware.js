@@ -9,23 +9,19 @@ const allowedOrigins = [
   'https://jordanpostak.github.io/inspire-stone'
 ];
 
-// Configuration for routes that require credentials
-const loginCors = (req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin) || !origin) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, UPDATE, PUT, PATCH');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(204); // No Content
-  } else {
-    next();
-  }
+// Configuration for routes that require cookies
+const loginCookie = (req, res, next) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin);
+  res.set('Access-Control-Allow-Credentials', 'true');
+  next();
 };
+
+// Configuration for routes that require credentials
+const loginCors = cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  credentials: true
+});
 
 // Configuration for routes that don't require credentials
 const simpleCors = cors({
@@ -33,6 +29,7 @@ const simpleCors = cors({
  });
 
 module.exports = {
+  loginCookie,
   loginCors,
   simpleCors
 };
