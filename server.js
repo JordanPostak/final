@@ -9,48 +9,19 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware for setting CORS headers dynamically
-app.use((req, res, next) => {
-  // Allow credentials (cookies) to be sent with requests
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  // Allow requests only from specific origins (not '*')
-  const allowedOrigins = [
-      'http://localhost:5173',          // Local development
-      'http://seerstoneapi.onrender.com', // Your backend URL
-      'https://seerstoneapi.onrender.com', // Your backend URL
-      'https://jordanpostak.github.io',             // GitHub Pages root URL
-      'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-  ];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-  } else {
-      res.setHeader('Access-Control-Allow-Origin', ''); // Set to empty string if origin is not allowed
-  }
-  // Allow specific methods
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  // Allow specific headers
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-      return res.status(200).end();
-  }
-  next();
-});
-
 app.use(cors());
-// // CORS setup using the `cors` package
-// app.use(cors({
-//     origin: [
-//         'http://localhost:5173',          // Local development
-//         'http://seerstoneapi.onrender.com', // Your backend URL
-//         'https://seerstoneapi.onrender.com', // Your backend URL
-//         'https://jordanpostak.github.io',             // GitHub Pages root URL
-//         'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-//     ],
-//     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-//     credentials: true
-// }));
+// CORS setup using the `cors` package
+app.use(cors({
+    origin: [
+        'http://localhost:5173',          // Local development
+        'http://seerstoneapi.onrender.com', // Your backend URL
+        'https://seerstoneapi.onrender.com', // Your backend URL
+        'https://jordanpostak.github.io',             // GitHub Pages root URL
+        'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
+    ],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    credentials: true
+}));
 
 // Other middleware
 app.use(bodyParser.json());
@@ -66,6 +37,17 @@ app.use(session({
 
 // Routes
 app.use("/", require("./routes/index.js"));
+
+// Custom middleware to handle CORS headers dynamically
+app.use((req, res, next) => {
+  if (req.path === '/users/login') {
+      // Apply specific CORS headers only for login route
+      res.set('Access-Control-Allow-Origin', req.headers.origin);
+      res.set('Access-Control-Allow-Credentials', 'true');
+  }
+  next();
+});
+
 
 // Initialize MongoDB connection
 mongodb.initDb((err) => {
