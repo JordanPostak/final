@@ -28,6 +28,10 @@ app.use(cors({
     ],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     credentials: true,
+    cookie: {
+      secure: true, // Ensure HTTPS is used
+      sameSite: 'None' // Required for cross-site cookies
+  }
 }));
 
 // Other middleware
@@ -39,10 +43,6 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      secure: true, // Ensure HTTPS is used
-      sameSite: 'None' // Required for cross-site cookies
-  }
 }));
 
 // Routes
