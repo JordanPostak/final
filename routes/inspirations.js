@@ -12,6 +12,6 @@ router.put('/:id',isAuthenticated,  inspirationsController.updateInspiration);
 router.delete('/:id',isAuthenticated,  inspirationsController.deleteInspiration);
 router.get('/user_id/:user_id',  inspirationsController.getInspirationsByUserId);
 router.get('/user_id/:user_id/type/:type',isAuthenticated,  inspirationsController.getInspirationsByUserIdAndType);
-router.get('/user_id/:user_id/step/:step', isAuthenticated, inspirationsController.getInspirationsByUserIdAndStep);
+router.get('/user_id/:user_id/step/:step', inspirationsController.getInspirationsByUserIdAndStep);
 
 module.exports = router;
