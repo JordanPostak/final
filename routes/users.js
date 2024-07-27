@@ -5,7 +5,38 @@ const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users');
 const { isAuthenticated } = require('../middleware/authenticate');
-const { loginCookie, loginCors, simpleCors } = require('../middleware/corsMiddleware');
+// const { loginCookie, loginCors, simpleCors } = require('../middleware/corsMiddleware');
+
+// middleware
+const cors = require('cors');
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://seerstoneapi.onrender.com',
+  'https://seerstoneapi.onrender.com',
+  'https://jordanpostak.github.io',
+  'https://jordanpostak.github.io/inspire-stone'
+];
+
+// Configuration for routes that require cookies
+const loginCookie = (req, res, next) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin);
+  res.set('Access-Control-Allow-Credentials', 'true');
+  next();
+};
+
+// Configuration for routes that require credentials
+const loginCors = cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  credentials: true
+});
+
+// Configuration for routes that don't require credentials
+const simpleCors = cors({
+  origin: allowedOrigins,
+ });
+
 
 // Retrieve all user profiles
 router.get('/', simpleCors, usersController.getAllUsers);

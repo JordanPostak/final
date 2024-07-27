@@ -9,27 +9,6 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware for setting CORS headers dynamically
-app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-    res.set('Access-Control-Allow-Credentials', 'true');
-    next();
-});
-
-// app.use(cors());
-// CORS setup using the `cors` package
-app.use(cors({
-    origin: [
-        'http://localhost:5173',          // Local development
-        'http://seerstoneapi.onrender.com', // Your backend URL
-        'https://seerstoneapi.onrender.com', // Your backend URL
-        'https://jordanpostak.github.io',             // GitHub Pages root URL
-        'https://jordanpostak.github.io/inspire-stone' // GitHub Pages specific project URL
-    ],
-    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-    credentials: true
-}));
-
 // Other middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,14 +19,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-
-app.use((req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(204);
-  } else {
-    next();
-  }
-});
 
 // Routes
 app.use("/", require("./routes/index.js"));
