@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users');
 const { isAuthenticated } = require('../middleware/authenticate');
-const dynamicCors = require('../middleware/dynamicCorsMiddleware');
+const dynamicCors = require('../middleware/corsMiddleware');
 
 // Retrieve all user profiles
 router.get('/', usersController.getAllUsers);
