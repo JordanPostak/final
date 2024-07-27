@@ -38,7 +38,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: "secret",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      secure: true, // Ensure HTTPS is used
+      sameSite: 'None' // Required for cross-site cookies
+  }
 }));
 
 // Routes
