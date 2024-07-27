@@ -30,7 +30,8 @@ const loginCors = (req, res, next) => {
 // Configuration for routes that don't require credentials
 const simpleCors = cors({
   origin: allowedOrigins,
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  credentials: false
 });
 
 module.exports = {
