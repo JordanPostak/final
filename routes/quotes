@@ -5,6 +5,6 @@ const router = express.Router();
 const quotesController = require('../controllers/quotes');
 const { loginCors, simpleCors } = require('../middleware/corsMiddleware');
 
-router.get('/',  simpleCors, quotesController.getAllQuotes);
+router.get('/', quotesController.getAllQuotes);
 
 module.exports = router;
