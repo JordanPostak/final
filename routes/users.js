@@ -1,11 +1,10 @@
 //...This is the routes/users.js file...
 
-
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users');
 const { isAuthenticated } = require('../middleware/authenticate');
-const loginCors = require('../middleware/corsMiddleware.js');
+const dynamicCors = require('../middleware/dynamicCorsMiddleware');
 
 // Retrieve all user profiles
 router.get('/', usersController.getAllUsers);
@@ -17,7 +16,7 @@ router.get('/:id', usersController.getUserById);
 router.post('/register', usersController.registerUser);
 
 // Login user
-router.post('/login', usersController.loginUser);
+router.post('/login', dynamicCors, usersController.loginUser);
 
 // Update user profile information by user ID
 router.put('/:id', isAuthenticated, usersController.updateUserById);
