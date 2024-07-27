@@ -4,9 +4,8 @@ const express = require('express');
 const router = express.Router();
 const plansController = require('../controllers/plans');
 const { isAuthenticated } = require('../middleware/authenticate');
-const { loginCors, simpleCors } = require('../middleware/corsMiddleware');
 
-router.get('/', simpleCors, plansController.getAllPlanEntries);
+router.get('/', plansController.getAllPlanEntries);
 router.post('/', isAuthenticated, plansController.createPlanEntry);
 router.get('/:id', isAuthenticated, plansController.getPlanEntryById);
 router.put('/:id', isAuthenticated, plansController.updatePlanEntryById);
