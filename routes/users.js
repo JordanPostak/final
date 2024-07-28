@@ -19,10 +19,10 @@ router.post('/register', usersController.registerUser);
 router.post('/login', usersController.loginUser);
 
 // Update user profile information by user ID
-router.put('/:id', isAuthenticated, usersController.updateUserById);
+router.put('/:id', usersController.updateUserById);
 
 // Delete user profile by user ID
-router.delete('/:id', isAuthenticated, usersController.deleteUserById);
+router.delete('/:id', usersController.deleteUserById);
 
 // Logout user
 router.post('/logout', usersController.logoutUser);

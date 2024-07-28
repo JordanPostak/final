@@ -6,11 +6,11 @@ const plansController = require('../controllers/plans');
 const { isAuthenticated } = require('../middleware/authenticate');
 
 router.get('/', plansController.getAllPlanEntries);
-router.post('/', isAuthenticated, plansController.createPlanEntry);
-router.get('/:id', isAuthenticated, plansController.getPlanEntryById);
-router.put('/:id', isAuthenticated, plansController.updatePlanEntryById);
-router.delete('/:id', isAuthenticated, plansController.deletePlanEntryById);
-router.get('/user_id/:user_id', isAuthenticated, plansController.getPlanEntriesByUserId);
-router.get('/user_id/:user_id/inspiration_id/:inspiration_id', isAuthenticated, plansController.getPlanEntriesByUserIdAndInspirationId);
+router.post('/', plansController.createPlanEntry);
+router.get('/:id', plansController.getPlanEntryById);
+router.put('/:id', plansController.updatePlanEntryById);
+router.delete('/:id', plansController.deletePlanEntryById);
+router.get('/user_id/:user_id', plansController.getPlanEntriesByUserId);
+router.get('/user_id/:user_id/inspiration_id/:inspiration_id', plansController.getPlanEntriesByUserIdAndInspirationId);
 
 module.exports = router;
