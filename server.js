@@ -38,9 +38,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Session middleware
 app.use(session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
+  secret: "secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      secure: true, // Ensure HTTPS is used
+      sameSite: 'None' // Required for cross-site cookies
+  }
 }));
 
 // Routes
